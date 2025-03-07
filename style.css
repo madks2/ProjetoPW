@@ -1,0 +1,150 @@
+/* Reset padrão */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo do corpo */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+/* Navegação */
+nav {
+    background-color: #333;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    position: relative;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 10px 15px;
+    background: #444;
+    border-radius: 5px;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+}
+
+/* Submenu */
+nav ul .submenu {
+    display: none;
+    position: absolute;
+    background-color: #444;
+    list-style: none;
+    top: 100%;
+    left: 0;
+    width: 150px;
+    border-radius: 5px;
+}
+
+nav ul li:hover .submenu {
+    display: block;
+    text-align: left;
+}
+
+nav ul .submenu li a {
+    display: block;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 0;
+}
+
+/* Tela de Login */
+.login-container {
+    background-color: #fff;
+    width: 400px;
+    padding: 40px 30px;
+    border-radius: 8px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    text-align: left; 
+    font-size: 16px;
+    margin: 80px auto;
+}
+
+.login-container h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center; 
+}
+
+/* Grupo de entrada */
+.input-group {
+    margin-bottom: 25px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+    text-align: left; 
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+/* Efeito de foco nos campos de input */
+.input-group input:focus {
+    border-color: #28a745;
+    outline: none;
+}
+
+/* Botão de login */
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: #ac8dd6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Efeito de hover no botão */
+button:hover {
+    background-color: #5e47979a;
+}
+
+/* Links de "Esqueceu a senha?" e "Criar conta" */
+.password-links {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+.password-links a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.password-links a:hover {
+    color: #0056b3;
+}
+
