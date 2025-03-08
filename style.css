@@ -14,7 +14,7 @@ body {
 
 /* Navegação */
 nav {
-    background-color: #333;
+    background-color: #826fc5;
     padding: 10px 0;
 }
 
@@ -34,7 +34,7 @@ nav ul li a {
     color: white;
     font-size: 18px;
     padding: 10px 15px;
-    background: #444;
+    background: #ac8dd6;
     border-radius: 5px;
 }
 
@@ -72,7 +72,7 @@ nav ul .submenu li a {
     width: 400px;
     padding: 40px 30px;
     border-radius: 8px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 15px rgba(126, 204, 218, 0.1);
     text-align: left; 
     font-size: 16px;
     margin: 80px auto;
@@ -109,7 +109,7 @@ nav ul .submenu li a {
 
 /* Efeito de foco nos campos de input */
 .input-group input:focus {
-    border-color: #28a745;
+    border-color: #826fc5;
     outline: none;
 }
 
