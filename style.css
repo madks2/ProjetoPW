@@ -14,7 +14,7 @@ body {
 
 /* Navegação */
 nav {
-    background-color: #826fc5;
+    background-color: #8b79ca;
     padding: 10px 0;
 }
 
@@ -29,24 +29,16 @@ nav ul li {
     margin: 0 15px;
 }
 
-nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-size: 18px;
-    padding: 10px 15px;
-    background: #ac8dd6;
-    border-radius: 5px;
-}
 
 nav ul li a:hover {
-    background-color: #555;
+    background-color: #8b79ca;
 }
 
 /* Submenu */
 nav ul .submenu {
     display: none;
     position: absolute;
-    background-color: #444;
+    background-color: #8b79ca;
     list-style: none;
     top: 100%;
     left: 0;
@@ -75,7 +67,7 @@ nav ul .submenu li a {
     box-shadow: 0 8px 15px rgba(126, 204, 218, 0.1);
     text-align: left; 
     font-size: 16px;
-    margin: 80px auto;
+    margin: 180px auto;
 }
 
 .login-container h2 {
@@ -147,4 +139,3 @@ button:hover {
 .password-links a:hover {
     color: #0056b3;
 }
-
