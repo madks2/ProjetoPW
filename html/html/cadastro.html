@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Cadastro</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="buttonsForm">
+            <div class="btnColor"></div>
+            <button id="loginButton">Login</button>
+            <button id="cadastroButton">Cadastro</button>
+        </div>
+    
+        <h2>Cadastro</h2>
+        <form id="cadastro">
+            <label for="txtUsuario">Email ou telefone</label>
+            <i class="ri-mail-line"></i>
+            <input type="text" id="txtUsuario" name="txtUsuario" placeholder="Digite seu telefone ou email" required>
+    
+            <label for="txtSenha">Senha</label>
+            <i class="ri-lock-password-line"></i>
+            <input type="password" id="txtSenha" name="txtSenha" placeholder="Digite sua senha" required>
+    
+            <label for="txtConfSenha">Confirme sua senha</label>
+            <i class="ri-lock-password-line"></i>
+            <input type="password" id="txtConfSenha" name="txtConfSenha" placeholder="Confirme sua senha" required>
+    
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+    <script src="../js/script.js"></script>
+</body>
+</html>
