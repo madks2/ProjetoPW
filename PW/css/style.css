@@ -17,17 +17,26 @@ body {
 }
 
 .login-container {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0);
   padding: 20px;
   width: 350px;
-  height: 450px;
+  max-height: 500px; 
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: thin; 
   border-radius: 10px;
-  box-shadow: 0 0 20px 0 darkgrey;
+}
+
+.login-container::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.login-container {
+  scrollbar-width: none;
 }
 
 form {
@@ -37,13 +46,12 @@ form {
     align-items: flex-start;
     justify-content: center;
 }
-      
 
 .buttonsForm {
     margin-top: 40px;
-    position: relative;
+    position: sticky;
     border-radius: 30px;
-    box-shadow: 0 0 7px 0 rgb(214, 104, 177);
+    box-shadow: 0 0 7px 0 #5a252b;
 }
   
 .buttonsForm button {
@@ -58,7 +66,7 @@ form {
     position: absolute;
     width: 108px;
     height: 100%;
-    background: linear-gradient(to right, #dd56e9, #fc9eec);
+    background: linear-gradient(to right, #5a252b, #722F37);
     border-radius: 30px;
     transition: .3s;
 }
@@ -68,7 +76,7 @@ form {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start; 
 }
 
 .input-group label {
@@ -76,15 +84,15 @@ form {
     font-weight: bold;
     margin-bottom: 8px;
     color: #555;
-    text-align: left;
-  }
+    text-align: left; 
+}
 
 .input-icon-wrapper {
   position: relative;
   width: 100%;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="date"] {
   border: 1px solid #ddd;
   border-radius: 60px;
   padding: 8px 0 8px 35px;
@@ -103,13 +111,13 @@ input[type="text"], input[type="password"] {
   color: #555;
 }
 
-input[type="text"]:focus, input[type="password"]:focus {
-  border-color: #826fc5;
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="date"]:focus {
+  border-color: #422121;
   outline: none;
 }
 
 button[type="submit"] {
-  background: #dd56e9;
+  background: #5a252b;
   color: white;
   border-radius: 30px;
   width: 100%;
@@ -127,3 +135,20 @@ button[type="submit"] {
   font-size: 13px;
 }
 
+.password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-field input {
+  flex: 1;
+  padding-right: 40px; 
+}
+
+.password-field .ri-eye-off-line,
+.password-field .ri-eye-line {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}

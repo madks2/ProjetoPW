@@ -47,5 +47,17 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("cadastroButton").addEventListener("click", function() {
         window.location.href = "cadastro.html";
     });
-});
 
+    const togglePassword = document.getElementById("togglePassword");
+    const senhaInput = document.getElementById("txtSenha");
+
+    if (togglePassword && senhaInput) {
+        togglePassword.addEventListener("click", function () {
+            const isPassword = senhaInput.getAttribute('type') === 'password';
+            senhaInput.setAttribute('type', isPassword ? 'text' : 'password');
+
+            togglePassword.classList.toggle('ri-eye-line', isPassword);
+            togglePassword.classList.toggle('ri-eye-off-line', !isPassword);
+        });
+    }
+});

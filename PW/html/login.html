@@ -11,22 +11,24 @@
     <div class="login-container">
         <div class="buttonsForm">
             <div class="btnColor"></div>
-            <button id="loginButton">Login</button>
-            <button id="cadastroButton">Cadastro</button>
-          </div>
+            <button id="loginButton">Entrar</button>
+            <button id="cadastroButton">Cadastre-se</button>
+        </div>
     
         <h2>Login</h2>
         <form id="login">
             <label for="txtUsuario">Email ou telefone</label>
-            <i class="ri-mail-line"></i>
             <input type="text" id="txtUsuario" name="txtUsuario" placeholder="Digite seu telefone ou email" required>
-    
+
             <label for="txtSenha">Senha</label>
-            <i class="ri-lock-password-line"></i>
-            <input type="password" id="txtSenha" name="txtSenha" placeholder="Digite sua senha" required>
+            <div class="password-field">
+                <input type="password" id="txtSenha" name="txtSenha" placeholder="Digite sua senha" required>
+                <i class="ri-eye-off-line" id="togglePassword"></i>
+            </div>
     
-            <button type="submit">Cadastrar</button>
+            <button type="submit">Acessar conta</button>
         </form>
+
     </div>
     <script src="../js/script.js"></script>
 </body>

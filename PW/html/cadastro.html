@@ -11,15 +11,31 @@
     <div class="login-container">
         <div class="buttonsForm">
             <div class="btnColor"></div>
-            <button id="loginButton">Login</button>
-            <button id="cadastroButton">Cadastro</button>
+            <button id="loginButton">Entrar</button>
+            <button id="cadastroButton">Cadastre-se</button>
         </div>
     
         <h2>Cadastro</h2>
         <form id="cadastro">
-            <label for="txtUsuario">Email ou telefone</label>
+            <label for="txtNome">Nome completo</label>
+            <i class="ri-user-line"></i>
+            <input type="text" id="txtNome" name="txtNome" placeholder="Digite seu nome completo" required>
+    
+            <label for="txtEmail">Email</label>
             <i class="ri-mail-line"></i>
-            <input type="text" id="txtUsuario" name="txtUsuario" placeholder="Digite seu telefone ou email" required>
+            <input type="email" id="txtEmail" name="txtEmail" placeholder="Digite seu email" required>
+    
+            <label for="txtConfEmail">Confirmar email</label>
+            <i class="ri-mail-line"></i>
+            <input type="email" id="txtConfEmail" name="txtConfEmail" placeholder="Confirme seu email" required>
+    
+            <label for="txtCelular">Número do celular</label>
+            <i class="ri-phone-line"></i>
+            <input type="text" id="txtCelular" name="txtCelular" placeholder="Digite seu número de celular" required>
+    
+            <label for="txtDataNasc">Data de nascimento</label>
+            <i class="ri-calendar-line"></i>
+            <input type="date" id="txtDataNasc" name="txtDataNasc" required>
     
             <label for="txtSenha">Senha</label>
             <i class="ri-lock-password-line"></i>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRONETWORKER</title>
+    <link rel="stylesheet" href="../css/pginicial.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <i class="fas fa-network-wired"></i>
+                <span>PRO<span class="brand-highlight">NETWORKER</span></span>
+            </a>
+            
+            <div class="nav-links">
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Vagas</a></li>
+                <li><a href="#">Mensagens</a></li>
+                <li><a href="#">Perfil</a></li>
+            </div>
+            
+            <div class="auth-buttons">
+                <button type="button" class="btn-login" onclick="window.location.href='login.html'">Entrar</button>
+                <button type="button" class="btn-register" onclick="window.location.href='cadastro.html'">Cadastrar</button>
+
+            </div>
+        </nav>
+    </header>
+
+
+    <section class="hero">
+        <div class="hero-content">
+            <p class="tagline">CONECTANDO TALENTOS A OPORTUNIDADES</p>
+            <h1>Encontre seu próximo desafio profissional</h1>
+            <p>Mais de <strong>15.000 vagas</strong> disponíveis em nossa plataforma.</p>
+            
+            <div class="search-container">
+                <form id="filter-form" class="search-form">
+                    <input type="text" id="search-term" class="search-input" placeholder="Cargo">
+                    <input type="text" id="search-location" class="search-input" placeholder="Localização">
+                    <button type="submit" class="btn btn-accent">
+                        <i class="fas fa-search"></i> Buscar Vagas
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+ 
+    <section class="jobs-section">
+        <div class="section-header">
+            <h2 class="section-title"><i class="fas fa-star"></i> Vagas em Destaque</h2>
+            <a href="#" class="btn btn-outline"><i class="fas fa-list"></i> Ver todas</a>
+        </div>
+        
+        <div id="status-message"></div>
+        
+        <div id="jobs-container" class="jobs-grid">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Carregando vagas exclusivas...</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="features">
+        <div class="features-container">
+            <h2 class="section-title" style="text-align: center;">Por que a PRONETWORKER é diferente?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title">Conexão Precisa</h3>
+                    <p>Conectamos automaticamente o seu perfil às vagas mais compatíveis.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock-open"></i>
+                    </div>
+                    <h3 class="feature-title">Conexão Direta</h3>
+                    <p>Converse diretamente com os recrutadores.</p>
+                </div>
+
+            <!-- Colocar mais motivos-->
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="partners-section">
+        <div class="section-header">
+            <h2 class="section-title"><i class="fas fa-handshake"></i> Empresas que confiam na PRONETWORKER</h2>
+        </div>
+        <!-- Não esquecer de adicionar as empresas plmds-->
+        <div class="partners-grid">
+            <div class="partner-card">
+                <i class="ri-cpu-line"></i>
+                <p>Tecnologia e inovação</p>
+            </div>
+            <div class="partner-card">
+                <i class="ri-bank-line"></i>
+                <p>Bancos</p>
+            </div>
+            <div class="partner-card">
+                <i class="ri-store-2-line"></i>
+                <p>Moda e beleza</p>
+            </div>
+            <div class="partner-card">
+                <i class="ri-restaurant-line"></i>
+                <p>Alimentação e consumos</p>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <a href="#" class="footer-logo">
+                    <i class="fas fa-network-wired"></i> PRONETWORKER
+                </a>
+                <p>
+                    Conecte-se com profissionais de diversas áreas, amplie suas oportunidades de carreira 
+                    e fortaleça sua rede de contatos
+                </p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Para Candidatos</h3>
+                <ul>
+                    <li><a href="#">Buscar Vagas</a></li>
+                    <li><a href="#">Cadastrar Currículo</a></li>
+                    <li><a href="#">Dicas de Carreira</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Para Empresas</h3>
+                <ul>
+                    <li><a href="#">Anunciar Vagas</a></li>
+                    <li><a href="#">Buscar Talentos</a></li>
+                    <li><a href="#">Planos</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Contato</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-envelope"></i> contato@proneworker.com</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> (11) 3040-4030</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> São Paulo, SP</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 PRONETWORKER. Todos os direitos reservados. | <a href="#">Política de Privacidade</a> | <a href="#">Termos de Uso</a></p>
+        </div>
+    </footer>
+
+    <script src="../js/pg.js"></script>
+</body>
+</html>
