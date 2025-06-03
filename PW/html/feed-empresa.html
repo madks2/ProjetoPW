@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRONETWORKER</title>
-    <link rel="stylesheet" href="../css/feed.css">
+    <title>Feed Empresa - PRONETWORKER</title>
+    <link rel="stylesheet" href="../css/feed-empresa.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
@@ -12,24 +12,24 @@
     <header>
         <nav class="navbar">
             <a href="#" class="logo">
-                <img src="../assets/logo.png" alt="PRONETWORKER Logo">
+                <img src="../assets/image_568019.png" alt="PRONETWORKER Logo">
             </a>
 
             <div class="nav-links">
                 <li><a href="#" class="active"><i class="ri-home-line"></i> Início</a></li>
-                <li><a href="#"><i class="ri-briefcase-line"></i> Vagas</a></li>
+                <li><a href="#" id="my-vacancies-link"><i class="ri-briefcase-line"></i> Minhas Vagas</a></li>
                 <li>
                     <a href="#" class="nav-link notification">
                         <i class="ri-notification-line"></i> Notificações
-                        <div class="badge">3</div>
+                        <div class="badge">2</div>
                     </a>
                 </li>
-                <li><a href="#profile-card-container" id="nav-profile-link"><i class="ri-user-line"></i> Perfil</a></li>
+                <li><a href="#profile-card-container" id="nav-profile-link"><i class="ri-building-line"></i> Perfil Empresa</a></li>
             </div>
 
             <div class="header-profile auth-buttons">
-                <img id="header-profile-pic" src="../assets/Captura de tela 2025-06-02 174843.png" alt="Perfil" class="profile-thumb" />
-                <span class="profile-name">Eu <i class="ri-arrow-down-s-fill"></i></span>
+                <img id="header-profile-pic" src="../assets/Captura de tela 2025-06-02 174843.png" alt="Perfil Empresa" class="profile-thumb" />
+                <span class="profile-name">Empresa XYZ <i class="ri-arrow-down-s-fill"></i></span>
                 <div class="dropdown-options profile-dropdown">
                     <a href="#">Ver Perfil</a>
                     <a href="#">Configurações</a>
@@ -42,62 +42,75 @@
     <main class="main">
         <div class="left-main">
             <div class="left-main-1 profile-card-container">
-                <img src="../assets/pattern-banner.png" alt="Banner do perfil" class="banner">
-                <img id="my-profile-pic" src="../assets/Captura de tela 2025-06-02 174843.png" alt="Foto de perfil" class="my-picture">
+                <img src="../assets/pattern-banner.png" alt="Banner do perfil da empresa" class="banner">
+                <img id="my-profile-pic" src="../assets/Captura de tela 2025-06-02 174843.png" alt="Logo da empresa" class="my-picture">
                 <input type="file" id="upload-pic" accept="image/*">
                 <div class="about">
-                    <h5>Maria Eduarda</h5>
-                    <p class="name-about">Desenvolvedora de Front-end | UI/UX Designer | Em busca de novas experiências!</p>
+                    <h5>Empresa XYZ Ltda.</h5>
+                    <p class="name-about">Inovando em soluções de tecnologia | Em busca de talentos!</p>
                     <button class="edit-profile-button" onclick="document.getElementById('upload-pic').click()">
-                        <i class="ri-image-add-line"></i> Editar Foto
+                        <i class="ri-image-add-line"></i> Editar Logo
                     </button>
                     <a href="#" class="edit-profile-button edit-pic-button"><i class="ri-pencil-line"></i> Editar Perfil</a>
                 </div>
                 <div class="analytics">
-                    <h5>Visualizações de perfil</h5>
-                    <p>150</p>
+                    <h5>Visualizações de Vagas</h5>
+                    <p>530</p>
                 </div>
                 <div class="premium">
                     <p>Aproveite ao máximo seu perfil com o Premium</p>
-                    <a href="./curriculo.html" class="view-resume-link">
-                        <i class="ri-file-text-line"></i> Criar meu Currículo
+                    <a href="#" class="view-resume-link">
+                        <i class="ri-award-line"></i> Gerenciar Planos
                     </a>
                 </div>
                 <div class="my-item">
-                    <p>Meus itens</p>
+                    <p>Candidaturas Recebidas</p>
+                    <p class="count">25</p>
                 </div>
             </div>
-            </div>
+        </div>
 
         <div class="middle-main">
-            <div class="middle-main-1">
-                <div class="post-1">
-                    <img src="../assets/Captura de tela 2025-06-02 174843.png" alt="Foto de perfil" class="middle-pic">
-                    <input type="text" placeholder="Começar publicação" class="post">
-                </div>
-                <div class="linked-input">
-                    <div class="input">
-                        <i class="ri-image-add-line"></i>
-                        <span>Mídia</span>
+            <div class="middle-main-1 post-vacancy-card">
+                <h2>Publicar Nova Vaga</h2>
+                <form id="vacancy-form">
+                    <div class="form-group">
+                        <label for="vacancy-title">Título da Vaga:</label>
+                        <input type="text" id="vacancy-title" placeholder="Ex: Desenvolvedor Front-end Sênior" required>
                     </div>
-                    <div class="input">
-                        <i class="ri-calendar-event-line"></i>
-                        <span>Evento</span>
+                    <div class="form-group">
+                        <label for="vacancy-location">Localização:</label>
+                        <input type="text" id="vacancy-location" placeholder="Ex: São Paulo, Remoto" required>
                     </div>
-                    <div class="input">
-                        <i class="ri-article-line"></i>
-                        <span>Escrever artigo</span>
+                    <div class="form-group">
+                        <label for="vacancy-type">Tipo de Contrato:</label>
+                        <select id="vacancy-type" required>
+                            <option value="">Selecione</option>
+                            <option value="CLT">CLT</option>
+                            <option value="PJ">PJ</option>
+                            <option value="Freelancer">Freelancer</option>
+                            <option value="Estagio">Estágio</option>
+                        </select>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="vacancy-description">Descrição da Vaga:</label>
+                        <textarea id="vacancy-description" rows="5" placeholder="Descreva os requisitos, responsabilidades e benefícios..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-accent" id="post-vacancy-button">Publicar Vaga</button>
+                    <button type="button" class="btn btn-outline" id="cancel-edit-button" style="display:none;">Cancelar Edição</button>
+                </form>
             </div>
 
-            <div class="middle-main-2 job-listings-container">
-                <h2>Vagas de Emprego Recentes</h2>
-                <div class="loading-message">
+            <div class="middle-main-2 company-job-listings-container">
+                <h2>Minhas Vagas Publicadas</h2>
+                <div class="loading-message" id="vacancies-loading-message" style="display:none;">
                     <div class="spinner"></div>
-                    <p>Carregando vagas...</p>
+                    <p>Carregando suas vagas...</p>
                 </div>
+                <div id="company-vacancies-list">
+                    <p class="no-vacancies-message">Nenhuma vaga publicada ainda. Comece a publicar!</p>
                 </div>
+            </div>
         </div>
 
         <div class="right-main">
@@ -170,6 +183,6 @@
         </div>
     </footer>
 
-    <script src="../js/feed.js"></script>
+    <script src="../js/feed-empresa.js"></script>
 </body>
 </html>
