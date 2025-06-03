@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tela de Login</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Login - Empresa</title>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style-empresa.css">
 </head>
 <body>
     <div class="container">
         <form id="loginForm">
-            <h1>Login</h1>
+            <div class="logo-container">
+                <h1>Login Empresarial</h1>
+            </div>
             
             <div class="input-group">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" placeholder="Digite seu e-mail" required>
+                <label for="email">E-mail Corporativo</label>
+                <input type="email" id="email" placeholder="seu@empresa.com" required>
             </div>
             
             <div class="input-group">
@@ -27,9 +29,10 @@
             
             <button type="submit">Entrar</button>
             
-            <p class="switch-text">Não tem conta? <a href="cadastro.html">Cadastre-se</a></p>
+            <p class="switch-text">Não tem conta? <a href="cadastro-empresa.html">Registre sua empresa</a></p>
         </form>
     </div>
-    <script src="../js/script.js"></script>
+
+    <script src="../js/script-empresa.js"></script>
 </body>
 </html>

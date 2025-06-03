@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currículo</title>
+    <link rel="stylesheet" href="../css/feed.css"> <link rel="stylesheet" href="../css/curriculo.css"> <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo"> <img src="../assets/logo.png" alt="PRONETWORKER Logo">
+            </a>
+
+            <div class="nav-links">
+                <li><a href="index.html"><i class="ri-home-line"></i> Início</a></li>
+                <li><a href="#"><i class="ri-briefcase-line"></i> Vagas</a></li>
+                <li>
+                    <a href="#" class="nav-link notification">
+                        <i class="ri-notification-line"></i> Notificações
+                        <div class="badge">3</div>
+                    </a>
+                </li>
+                <li><a href="#" id="nav-profile-link"><i class="ri-user-line"></i> Perfil</a></li>
+            </div>
+
+            <div class="header-profile auth-buttons">
+                <img id="header-profile-pic" src="../assets/Captura de tela 2025-06-02 174843.png" alt="Perfil" class="profile-thumb" />
+                <span class="profile-name">Eu <i class="ri-arrow-down-s-fill"></i></span>
+                <div class="dropdown-options profile-dropdown">
+                    <a href="#">Ver Perfil</a>
+                    <a href="#">Configurações</a>
+                    <a href="#">Sair</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-curriculo">
+        <div class="resume-form-card">
+            <h4>Criar/Editar meu Currículo</h4>
+            <form id="resume-form">
+                <fieldset>
+                    <legend>Informações Pessoais</legend>
+                    <label for="full-name">Nome Completo:</label>
+                    <input type="text" id="full-name" name="fullName" placeholder="Seu nome completo" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="seu.email@example.com" required>
+
+                    <label for="phone">Telefone:</label>
+                    <input type="tel" id="phone" name="phone" placeholder="(XX) XXXXX-XXXX">
+
+                    <label for="linkedin">LinkedIn (URL):</label>
+                    <input type="url" id="linkedin" name="linkedin" placeholder="https://www.linkedin.com/in/seuperfil">
+
+                    <label for="portfolio">Portfólio/Website (URL):</label>
+                    <input type="url" id="portfolio" name="portfolio" placeholder="https://seusite.com">
+
+                    <label for="location">Localização:</label>
+                    <input type="text" id="location" name="location" placeholder="Cidade, Estado">
+
+                    <label for="summary">Resumo Profissional:</label>
+                    <textarea id="summary" name="summary" rows="5" placeholder="Um breve resumo sobre sua carreira e objetivos." required></textarea>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Educação</legend>
+                    <div id="education-container">
+                        <div class="education-entry">
+                            <label for="course">Curso / Formação:</label>
+                            <input type="text" name="course[]" placeholder="Ex: Bacharelado em Ciência da Computação" required>
+
+                            <label for="institution">Instituição:</label>
+                            <input type="text" name="institution[]" placeholder="Ex: Universidade Federal de Minas Gerais" required>
+
+                            <label for="education-start-date">Período de Início:</label>
+                            <input type="month" name="education_start_date[]" required>
+
+                            <label for="education-end-date">Período de Término (ou Atual):</label>
+                            <input type="month" name="education_end_date[]">
+                            <label class="checkbox-label"><input type="checkbox" name="education_current[]"> Atualmente cursando</label>
+                        </div>
+                    </div>
+                    <button type="button" id="add-education" class="add-more-button">
+                        <i class="ri-add-circle-line"></i> Adicionar Educação
+                    </button>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Experiência Profissional</legend>
+                    <div id="experience-container">
+                        <div class="experience-entry">
+                            <label for="job-title">Cargo:</label>
+                            <input type="text" name="job_title[]" placeholder="Ex: Desenvolvedor Front-end Sênior" required>
+
+                            <label for="company">Empresa:</label>
+                            <input type="text" name="company[]" placeholder="Ex: Google Inc." required>
+
+                            <label for="experience-start-date">Período de Início:</label>
+                            <input type="month" name="experience_start_date[]" required>
+
+                            <label for="experience-end-date">Período de Término (ou Atual):</label>
+                            <input type="month" name="experience_end_date[]">
+                            <label class="checkbox-label"><input type="checkbox" name="experience_current[]"> Atualmente trabalhando</label>
+
+                            <label for="responsibilities">Principais Responsabilidades e Conquistas:</label>
+                            <textarea name="responsibilities[]" rows="4" placeholder="Descreva suas responsabilidades e conquistas."></textarea>
+                        </div>
+                    </div>
+                    <button type="button" id="add-experience" class="add-more-button">
+                        <i class="ri-add-circle-line"></i> Adicionar Experiência
+                    </button>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Habilidades</legend>
+                    <label for="skills">Habilidades (separadas por vírgula):</label>
+                    <input type="text" id="skills" name="skills" placeholder="Ex: JavaScript, React, Node.js, SQL">
+                </fieldset>
+
+                <fieldset>
+                    <legend>Idiomas</legend>
+                    <div id="languages-container">
+                        <div class="language-entry">
+                            <label for="language">Idioma:</label>
+                            <input type="text" name="language[]" placeholder="Ex: Inglês" required>
+
+                            <label for="proficiency">Proficiência:</label>
+                            <select name="proficiency[]" required>
+                                <option value="">Selecione</option>
+                                <option value="Basico">Básico</option>
+                                <option value="Intermediario">Intermediário</option>
+                                <option value="Avancado">Avançado</option>
+                                <option value="Fluente">Fluente</option>
+                                <option value="Nativo">Nativo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="button" id="add-language" class="add-more-button">
+                        <i class="ri-add-circle-line"></i> Adicionar Idioma
+                    </button>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Cursos e Certificações</legend>
+                    <div id="courses-container">
+                        <div class="course-entry">
+                            <label for="course-name">Nome do Curso/Certificação:</label>
+                            <input type="text" name="course_name[]" placeholder="Ex: Certificação Scrum Master" required>
+
+                            <label for="issuing-organization">Organização Emissora:</label>
+                            <input type="text" name="issuing_organization[]" placeholder="Ex: Scrum.org" required>
+
+                            <label for="course-year">Ano de Conclusão:</label>
+                            <input type="number" name="course_year[]" placeholder="AAAA" min="1900" max="2100">
+
+                            <label for="course-link">Link (opcional):</label>
+                            <input type="url" name="course_link[]" placeholder="Link para o certificado/curso">
+                        </div>
+                    </div>
+                    <button type="button" id="add-course" class="add-more-button">
+                        <i class="ri-add-circle-line"></i> Adicionar Curso/Certificação
+                    </button>
+                </fieldset>
+
+                <button type="submit" class="submit-resume-button">Salvar Currículo</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <a href="#" class="footer-logo">PRONETWORKER <i class="ri-network-line"></i></a>
+                <p>Conectando profissionais, impulsionando carreiras. Sua rede para o sucesso.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Links Úteis</h3>
+                <ul>
+                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Sobre Nós</a></li>
+                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Termos de Serviço</a></li>
+                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Política de Privacidade</a></li>
+                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Ajuda</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Serviços</h3>
+                <ul>
+                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Publicar Vaga</a></li>
+                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Anunciar</a></li>
+                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Perfil Premium</a></li>
+                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Consultoria</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Contato</h3>
+                <ul>
+                    <li><a href="#"><i class="ri-map-pin-line"></i> Rua Exemplo, 123 - Cidade, Estado</a></li>
+                    <li><a href="#"><i class="ri-phone-line"></i> (XX) XXXX-XXXX</a></li>
+                    <li><a href="#"><i class="ri-mail-line"></i> contato@pronetworker.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 PRONETWORKER. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../js/feed.js"></script> <script src="../js/curriculo.js"></script> </body>
+</html>

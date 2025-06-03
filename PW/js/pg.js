@@ -4,12 +4,31 @@ var containerVagas = document.getElementById('jobs-container');
 var formularioBusca = document.getElementById('filter-form');
 var mensagemStatus = document.getElementById('status-message');
 
+const viewAllLink = document.querySelector('.view-all-link');
+
+function isUserLoggedIn() {
+    return localStorage.getItem('isLoggedIn') === 'true';
+}
+
 window.addEventListener('DOMContentLoaded', function() {
     carregarVagas();
 });
 
+if (viewAllLink) {
+    viewAllLink.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        if (isUserLoggedIn()) {
+            window.location.href = 'todas-as-vagas.html'; 
+        } else {
+            window.location.href = 'login.html';
+        }
+    });
+}
+
 function carregarVagas() {
     mostrarCarregando();
+    
     setTimeout(function() {
         todasVagas = [
             {
@@ -24,6 +43,30 @@ function carregarVagas() {
                 postado: "há 2 dias",
                 habilidades: ["HTML", "CSS", "JavaScript", "React"]
             },
+            {
+                id: 2,
+                titulo: "Analista de Marketing",
+                empresa: "Digital Growth",
+                tipo: "hibrido",
+                localizacao: "São Paulo",
+                contrato: "PJ",
+                salario: "R$ 6.000 - 8.000",
+                descricao: "Vaga para analista com conhecimento em redes sociais e SEO.",
+                postado: "há 1 semana",
+                habilidades: ["Marketing", "Redes Sociais", "SEO"]
+            },
+            {
+                id: 3,
+                titulo: "Gerente de Projetos",
+                empresa: "Consultoria Global",
+                tipo: "presencial",
+                localizacao: "Rio de Janeiro",
+                contrato: "CLT",
+                salario: "R$ 12.000 - 15.000",
+                descricao: "Gerente com experiência em metodologias ágeis.",
+                postado: "hoje",
+                habilidades: ["Scrum", "Gestão", "Liderança"]
+            }
         ];
         
         vagasFiltradas = todasVagas.slice();
@@ -121,11 +164,11 @@ function filtrarVagas(evento) {
     
     vagasFiltradas = todasVagas.filter(function(vaga) {
         var correspondeTermo = vaga.titulo.toLowerCase().includes(termo) || 
-                            vaga.descricao.toLowerCase().includes(termo) ||
-                            vaga.empresa.toLowerCase().includes(termo) ||
-                            vaga.habilidades.some(function(h) { 
-                                return h.toLowerCase().includes(termo); 
-                            });
+                                vaga.descricao.toLowerCase().includes(termo) ||
+                                vaga.empresa.toLowerCase().includes(termo) ||
+                                vaga.habilidades.some(function(h) { 
+                                    return h.toLowerCase().includes(termo); 
+                                });
         
         var correspondeLocal = vaga.localizacao.toLowerCase().includes(local);
         
@@ -156,6 +199,8 @@ function mostrarMensagemSucesso(mensagem) {
     }, 3000);
 }
 
-formularioBusca.addEventListener('submit', filtrarVagas);
-document.getElementById('search-term').addEventListener('input', filtrarVagas);
-document.getElementById('search-location').addEventListener('input', filtrarVagas);
+if (formularioBusca) {
+    formularioBusca.addEventListener('submit', filtrarVagas);
+    document.getElementById('search-term')?.addEventListener('input', filtrarVagas);
+    document.getElementById('search-location')?.addEventListener('input', filtrarVagas);
+}

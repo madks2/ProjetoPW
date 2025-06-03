@@ -23,10 +23,26 @@
             </div>
             
             <div class="auth-buttons">
-                <button type="button" class="btn-login" onclick="window.location.href='login.html'">Entrar</button>
-                <button type="button" class="btn-register" onclick="window.location.href='cadastro.html'">Cadastrar</button>
-
+            <div class="btn-dropdown-wrapper">
+                <button type="button" class="btn-login">
+                    Entrar <i class="ri-arrow-down-s-fill"></i> </button>
+                <div class="dropdown-options">
+                    <a href="../html/login.html">Como Candidato</a>
+                    <a href="../html/login-empresa.html">Como Empresa</a>
+                </div>
             </div>
+
+            <div class="btn-dropdown-wrapper">
+                <button type="button" class="btn-register">
+                    Cadastrar <i class="ri-arrow-down-s-fill"></i> </button>
+                <div class="dropdown-options">
+                    <a href="../html/cadastro.html">Como Candidato</a>
+                    <a href="../html/cadastro-empresa.html">Como Empresa</a>
+                </div>
+            </div>
+        </div>
+        </nav>
+</header>
         </nav>
     </header>
 
@@ -53,7 +69,7 @@
     <section class="jobs-section">
         <div class="section-header">
             <h2 class="section-title"><i class="fas fa-star"></i> Vagas em Destaque</h2>
-            <a href="#" class="btn btn-outline"><i class="fas fa-list"></i> Ver todas</a>
+            <a href="#" class="btn btn-outline view-all-link">Ver todas <i class="fas fa-list"></i></a>
         </div>
         
         <div id="status-message"></div>
@@ -61,7 +77,7 @@
         <div id="jobs-container" class="jobs-grid">
             <div class="loading">
                 <div class="spinner"></div>
-                <p>Carregando vagas exclusivas...</p>
+                <p>Carregando vagas...</p>
             </div>
         </div>
     </section>
@@ -87,37 +103,39 @@
                     <p>Converse diretamente com os recrutadores.</p>
                 </div>
 
-            <!-- Colocar mais motivos-->
+            <!-- Tentar colocar mais motivos-->
             </div>
         </div>
     </section>
 
 
+<!-- Não esquecer de adicionar as empresas plmds-->
+<section class="partners-section">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-handshake"></i> Empresas que confiam na PRONETWORKER</h2>
+    </div>
+    <div class="partners-carousel">
+        <div class="carousel-track">
+            <img src="../assets/microsoft_logo.png" alt="Logo da Microsoft">
+            <img src="../assets/nestle_logo.png" alt="Logo da Nestlé">
+            <img src="../assets/itau_logo.png" alt="Logo do Itaú">
+            <img src="../assets/ambev_logo.png" alt="Logo da Ambev">
+            <img src="../assets/natura_logo.png" alt="Logo da Natura">
+            <img src="../assets/renner_logo.png" alt="Logo da Renner">
+            <img src="../assets/fedex_logo.png" alt="Logo da FedEx">
+            <img src="../assets/azul_logo.png" alt="Logo da Azul Linhas Aéreas">
 
-    <section class="partners-section">
-        <div class="section-header">
-            <h2 class="section-title"><i class="fas fa-handshake"></i> Empresas que confiam na PRONETWORKER</h2>
+            <img src="../assets/microsoft_logo.png" alt="Logo da Microsoft">
+            <img src="../assets/nestle_logo.png" alt="Logo da Nestlé">
+            <img src="../assets/itau_logo.png" alt="Logo do Itaú">
+            <img src="../assets/ambev_logo.png" alt="Logo da Ambev">
+            <img src="../assets/natura_logo.png" alt="Logo da Natura">
+            <img src="../assets/renner_logo.png" alt="Logo da Renner">
+            <img src="../assets/fedex_logo.png" alt="Logo da FedEx">
+            <img src="../assets/azul_logo.png" alt="Logo da Azul Linhas Aéreas">
         </div>
-        <!-- Não esquecer de adicionar as empresas plmds-->
-        <div class="partners-grid">
-            <div class="partner-card">
-                <i class="ri-cpu-line"></i>
-                <p>Tecnologia e inovação</p>
-            </div>
-            <div class="partner-card">
-                <i class="ri-bank-line"></i>
-                <p>Bancos</p>
-            </div>
-            <div class="partner-card">
-                <i class="ri-store-2-line"></i>
-                <p>Moda e beleza</p>
-            </div>
-            <div class="partner-card">
-                <i class="ri-restaurant-line"></i>
-                <p>Alimentação e consumos</p>
-            </div>
-        </div>
-    </section>
+    </div>
+</section>
 
 
     <footer>

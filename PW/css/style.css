@@ -1,154 +1,134 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&family=Roboto:wght@100;300;400;500;700;900&family=Source+Sans+Pro:wght@200;300;400;600;700;900&display=swap');
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f4f4f4;
-}
-
-.login-container {
-  background-color: rgba(255, 255, 255, 0);
-  padding: 20px;
-  width: 350px;
-  max-height: 500px; 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  overflow-y: scroll;
-  scrollbar-width: thin; 
-  border-radius: 10px;
-}
-
-.login-container::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
-}
-
-.login-container {
-  scrollbar-width: none;
-}
-
-form {
-    width: 100%;
+    background-color: #f5f5f5;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.buttonsForm {
-    margin-top: 40px;
-    position: sticky;
-    border-radius: 30px;
-    box-shadow: 0 0 7px 0 #5a252b;
+.container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 500px;
+    max-width: 90%;
 }
-  
-.buttonsForm button {
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    position: relative;
-    padding: 10px 29px;
-}
-  
-.btnColor {
-    position: absolute;
-    width: 108px;
-    height: 100%;
-    background: linear-gradient(to right, #5a252b, #722F37);
-    border-radius: 30px;
-    transition: .3s;
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
 }
 
 .input-group {
-    margin-bottom: 25px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; 
+    margin-bottom: 20px;
 }
 
-.input-group label {
+label {
     display: block;
-    font-weight: bold;
     margin-bottom: 8px;
+    font-weight: bold;
     color: #555;
-    text-align: left; 
 }
 
-.input-icon-wrapper {
-  position: relative;
-  width: 100%;
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="tel"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
-input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="date"] {
-  border: 1px solid #ddd;
-  border-radius: 60px;
-  padding: 8px 0 8px 35px;
-  outline: none;
-  width: 100%;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
+input:focus {
+    border-color: #5a252b;
+    outline: none;
 }
 
-.input-icon-wrapper i {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 20px;
-  color: #555;
+.password-input {
+    position: relative;
 }
 
-input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="date"]:focus {
-  border-color: #422121;
-  outline: none;
+.password-input i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #777;
 }
 
-button[type="submit"] {
-  background: #5a252b;
-  color: white;
-  border-radius: 30px;
-  width: 100%;
-  border: none;
-  outline: none;
-  padding: 8px 0 8px 15px;
-  font-size: 15px;
-  margin-top: 40px;
-  cursor: pointer;
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #5a252b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.divCheck {
-  margin: 10px 0 0 5px;
-  width: 80%;
-  font-size: 13px;
+button:hover {
+    background-color: #5a252b;
 }
 
-.password-field {
-  position: relative;
-  display: flex;
-  align-items: center;
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
 }
 
-.password-field input {
-  flex: 1;
-  padding-right: 40px; 
+.switch-text {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
 }
 
-.password-field .ri-eye-off-line,
-.password-field .ri-eye-line {
-  position: absolute;
-  right: 10px;
-  cursor: pointer;
+.switch-text a {
+    color: #666;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.switch-text a:hover {
+    text-decoration: underline;
+    color: #5a252b;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.checkbox-group input {
+    width: auto;
+    margin-right: 10px;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+    font-weight: normal;
+}
+
+.error-message {
+    color: #ff4444;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
 }

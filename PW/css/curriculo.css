@@ -1,0 +1,185 @@
+:root {
+    --primary: #722F37;
+    --secondary: #5a252b;
+    --dark: #121212;
+    --gray-dark: #2d2d2d;
+    --gray-medium: #4a4a4a;
+    --gray-light: #e0e0e0;
+    --light: #f5f5f5;
+    --success: #388e3c;
+    --error: #d32f2f;
+}
+
+.main-curriculo {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    background-color: var(--light);
+}
+
+.resume-form-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--gray-light);
+    padding: 30px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.resume-form-card h4 {
+    font-size: 1.8em;
+    color: var(--dark);
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 15px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.resume-form-card fieldset {
+    border: 1px solid var(--gray-light);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.resume-form-card legend {
+    font-weight: 700;
+    color: var(--primary);
+    padding: 0 15px;
+    font-size: 1.3em;
+    background-color: white;
+    margin-left: 10px;
+}
+
+.resume-form-card label {
+    display: block;
+    margin-bottom: 8px;
+    margin-top: 15px;
+    font-size: 1em;
+    color: var(--gray-dark);
+    font-weight: 500;
+}
+
+.resume-form-card input[type="text"],
+.resume-form-card input[type="email"],
+.resume-form-card input[type="tel"],
+.resume-form-card input[type="url"],
+.resume-form-card input[type="month"],
+.resume-form-card input[type="number"],
+.resume-form-card select,
+.resume-form-card textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--gray-medium);
+    border-radius: 6px;
+    font-size: 1em;
+    color: var(--dark);
+    background-color: var(--light);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.resume-form-card input:focus,
+.resume-form-card select:focus,
+.resume-form-card textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(114, 47, 55, 0.2);
+}
+
+.resume-form-card textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.resume-form-card .checkbox-label {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    font-weight: normal;
+    font-size: 0.9em;
+    color: var(--gray-dark);
+}
+
+.resume-form-card .checkbox-label input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+    transform: scale(1.1);
+}
+
+.resume-form-card .add-more-button {
+    background-color: var(--gray-light);
+    color: var(--gray-dark);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-size: 1em;
+}
+
+.resume-form-card .add-more-button:hover {
+    background-color: var(--gray-medium);
+    color: white;
+}
+
+.resume-form-card .add-more-button i {
+    font-size: 1.2em;
+}
+
+.resume-form-card .submit-resume-button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.2em;
+    margin-top: 30px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.resume-form-card .submit-resume-button:hover {
+    background-color: var(--secondary);
+}
+
+.education-entry + .education-entry,
+.experience-entry + .experience-entry,
+.language-entry + .language-entry,
+.course-entry + .course-entry {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--gray-light);
+}
+
+@media (max-width: 768px) {
+    .main-curriculo {
+        padding: 20px;
+    }
+    .resume-form-card {
+        padding: 20px;
+    }
+    .resume-form-card h4 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+    .resume-form-card fieldset {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    .resume-form-card legend {
+        font-size: 1.1em;
+    }
+    .resume-form-card .submit-resume-button {
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+}
