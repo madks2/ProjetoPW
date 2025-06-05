@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - PRONETWORKER</title>
+    <link rel="stylesheet" href="../css/editar-perfil.css"> 
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <main class="main-curriculo"> 
+        <div class="resume-form-card"> 
+            <h4>Editar meu Perfil</h4>
+            <form id="editProfileForm">
+                <fieldset>
+                    <legend>Informações do Perfil</legend>
+
+                    <div class="profile-photo-area">
+                        <img id="profilePhotoPreview" src="../assets/default-avatar.png" alt="Foto de Perfil">
+                        <input type="file" id="profilePhotoInput" accept="image/*">
+                        <label for="profilePhotoInput" class="custom-file-upload">
+                            <i class="ri-camera-line"></i> Trocar Foto
+                        </label>
+                    </div>
+                    
+                    <label for="tituloProfissional">Título Profissional:</label>
+                    <input type="text" id="tituloProfissional" name="tituloProfissional" placeholder="Ex: Desenvolvedora Front-End Júnior" required>
+                    
+                    <label for="miniResumo">Mini Resumo / Apresentação:</label>
+                    <textarea id="miniResumo" name="miniResumo" rows="5" placeholder="Conte um pouco sobre você e seus objetivos..." required></textarea>
+                </fieldset>
+                
+                <button type="submit" class="submit-resume-button">Salvar Alterações</button>
+                <a href="../html/feed.html" class="back-link">Voltar para o Feed</a> 
+            </form>
+        </div>
+    </main>
+
+    <script src="../js/editar-perfil.js"></script> 
+</body>
+</html>

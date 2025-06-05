@@ -110,4 +110,44 @@ document.addEventListener('DOMContentLoaded', () => {
             
         });
     }
+
+    fetchCurrentsTechNews();
+
+     function loadUserName() {
+        const profileUserNameElement = document.getElementById('profile-user-name');
+        const headerUserNameElement = document.getElementById('header-user-name');
+
+        const userDataString = localStorage.getItem('userDataCandidato');
+
+        if (userDataString) {
+            try {
+                const userData = JSON.parse(userDataString);
+                const userName = userData.nome;
+
+                if (userName) {
+                    if (profileUserNameElement) {
+                        profileUserNameElement.textContent = userName;
+                    }
+                    if (headerUserNameElement) {
+                        const arrowIcon = headerUserNameElement.querySelector('.ri-arrow-down-s-fill');
+                        headerUserNameElement.textContent = userName + ' ';
+                        if (arrowIcon) {
+                            headerUserNameElement.appendChild(arrowIcon);
+                        }
+                    }
+                } else {
+                    if (profileUserNameElement) profileUserNameElement.textContent = "Meu Perfil";
+                    if (headerUserNameElement) {
+                        const arrowIcon = headerUserNameElement.querySelector('.ri-arrow-down-s-fill');
+                        headerUserNameElement.textContent = "Eu ";
+                        if (arrowIcon) headerUserNameElement.appendChild(arrowIcon);
+                    }
+                }
+            } catch (e) {
+                console.error("Erro ao usar o userDataCandidato do localStorage:", e);
+            }
+        } else {
+        }
+    }
+    loadUserName();
 });

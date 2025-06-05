@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRONETWORKER</title>
     <link rel="stylesheet" href="../css/feed.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+
 <body>
     <header>
         <nav class="navbar">
@@ -24,12 +26,11 @@
                         <div class="badge">3</div>
                     </a>
                 </li>
-                <li><a href="#profile-card-container" id="nav-profile-link"><i class="ri-user-line"></i> Perfil</a></li>
             </div>
 
             <div class="header-profile auth-buttons">
-                <img id="header-profile-pic" src="../assets/Captura de tela 2025-06-02 174843.png" alt="Perfil" class="profile-thumb" />
-                <span class="profile-name">Eu <i class="ri-arrow-down-s-fill"></i></span>
+                <img id="header-profile-pic" src="" alt="Perfil" class="profile-thumb" />
+                <span class="profile-name" id="header-user-name">Eu <i class="ri-arrow-down-s-fill"></i></span>
                 <div class="dropdown-options profile-dropdown">
                     <a href="#">Ver Perfil</a>
                     <a href="#">Configurações</a>
@@ -42,24 +43,20 @@
     <main class="main">
         <div class="left-main">
             <div class="left-main-1 profile-card-container">
-                <img src="../assets/pattern-banner.png" alt="Banner do perfil" class="banner">
-                <img id="my-profile-pic" src="../assets/Captura de tela 2025-06-02 174843.png" alt="Foto de perfil" class="my-picture">
-                <input type="file" id="upload-pic" accept="image/*">
+                <img id="my-profile-pic" src="" alt="Foto de perfil" class="my-picture">
                 <div class="about">
-                    <h5>Maria Eduarda</h5>
-                    <p class="name-about">Desenvolvedora Front-end | UI/UX Designer | Em busca de novas experiências!</p>
-                    <button class="edit-profile-button" onclick="document.getElementById('upload-pic').click()">
-                        <i class="ri-image-add-line"></i> Editar Foto
-                    </button>
-                    <a href="#" class="edit-profile-button edit-pic-button"><i class="ri-pencil-line"></i> Editar Perfil</a>
+                    <h5 id="profile-user-name">Maria Eduarda</h5>
+                    <p class="name-about" id="profileDescriptionDisplay"></p>
+                    <a href="../html/editar-perfil.html" class="edit-profile-button edit-pic-button"><i
+                            class="ri-pencil-line"></i> Editar Perfil</a>
                 </div>
                 <div class="analytics">
                     <h5>Visualizações de perfil</h5>
-                    <p>150</p>
+                    <p>1</p>
                 </div>
                 <div class="premium">
                     <p>Aproveite ao máximo seu perfil com o Premium</p>
-                    <a href="./curriculo.html" class="view-resume-link">
+                    <a href="../html/curriculo.html" class="view-resume-link">
                         <i class="ri-file-text-line"></i> Criar meu Currículo
                     </a>
                 </div>
@@ -67,70 +64,41 @@
                     <p>Meus itens</p>
                 </div>
             </div>
-            </div>
-
-        <div class="middle-main">
-            <div class="middle-main-1">
-                <div class="post-1">
-                    <img src="../assets/Captura de tela 2025-06-02 174843.png" alt="Foto de perfil" class="middle-pic">
-                    <input type="text" placeholder="Começar publicação" class="post">
-                </div>
-                <div class="linked-input">
-                    <div class="input">
-                        <i class="ri-image-add-line"></i>
-                        <span>Mídia</span>
-                    </div>
-                    <div class="input">
-                        <i class="ri-calendar-event-line"></i>
-                        <span>Evento</span>
-                    </div>
-                    <div class="input">
-                        <i class="ri-article-line"></i>
-                        <span>Escrever artigo</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="middle-main-2 job-listings-container">
-                <h2>Vagas de Emprego Recentes</h2>
-                <div class="loading-message">
-                    <div class="spinner"></div>
-                    <p>Carregando vagas...</p>
-                </div>
-                </div>
         </div>
 
-        <div class="right-main">
-            <div class="right-main-2 news-feed-card">
-                <h4>Notícias de Tecnologia</h4>
-                <div class="news-article">
-                    <a href="#">
-                        <h5>Startup brasileira levanta R$10M para IA</h5>
-                    </a>
-                    <p>Há 2h atrás</p>
+        <div class="middle-main-2">
+            <section class="jobs-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-star"></i> Vagas de Emprego Recentes</h2>
                 </div>
-                <div class="news-article">
-                    <a href="#">
-                        <h5>As 5 tendências tecnológicas de 2025</h5>
-                    </a>
-                    <p>Há 1 dia atrás</p>
+
+                <div id="status-message"></div>
+                <div id="jobs-container" class="jobs-grid">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Carregando vagas...</p>
+                    </div>
                 </div>
-                <div class="news-article">
-                    <a href="#">
-                        <h5>Blockchain revoluciona a segurança de dados</h5>
-                    </a>
-                    <p>Há 3 dias atrás</p>
-                </div>
-                <a href="#" class="view-all-link">Ver todas as notícias <i class="ri-arrow-right-line"></i></a>
-            </div>
+            </section>
+        </div>
+
+        <div class="right-main-2 news-feed-card">
+            <h4>Notícias</h4>
+            <div id="news-articles"></div>
+            <a href="#" class="view-all-link">Ver todas as notícias <i class="ri-arrow-right-line"></i></a>
         </div>
     </main>
 
     <footer>
         <div class="footer-container">
             <div class="footer-about">
-                <a href="#" class="footer-logo">PRONETWORKER <i class="ri-network-line"></i></a>
-                <p>Conectando profissionais, impulsionando carreiras. Sua rede para o sucesso.</p>
+                <a href="#" class="footer-logo">
+                    <i class="fas fa-network-wired"></i> PRONETWORKER
+                </a>
+                <p>
+                    Conecte-se com profissionais de diversas áreas, amplie suas oportunidades de carreira
+                    e fortaleça sua rede de contatos
+                </p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
@@ -138,38 +106,42 @@
                     <a href="#"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
+
             <div class="footer-links">
-                <h3>Links Úteis</h3>
+                <h3>Para Candidatos</h3>
                 <ul>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Sobre Nós</a></li>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Termos de Serviço</a></li>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Política de Privacidade</a></li>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Ajuda</a></li>
+                    <li><a href="../html/feed.html">Buscar Vagas</a></li>
+                    <li><a href="../html/curriculo.html">Cadastrar Currículo</a></li>
+                    <li><a href="#">Dicas de Carreira</a></li>
                 </ul>
             </div>
+
             <div class="footer-links">
-                <h3>Serviços</h3>
+                <h3>Para Empresas</h3>
                 <ul>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Publicar Vaga</a></li>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Anunciar</a></li>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Perfil Premium</a></li>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Consultoria</a></li>
+                    <li><a href="#">Anunciar Vagas</a></li>
+                    <li><a href="#">Buscar Talentos</a></li>
+                    <li><a href="#">Planos</a></li>
                 </ul>
             </div>
+
             <div class="footer-links">
                 <h3>Contato</h3>
                 <ul>
-                    <li><a href="#"><i class="ri-map-pin-line"></i> Rua Exemplo, 123 - Cidade, Estado</a></li>
-                    <li><a href="#"><i class="ri-phone-line"></i> (XX) XXXX-XXXX</a></li>
-                    <li><a href="#"><i class="ri-mail-line"></i> contato@pronetworker.com</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> contato@proneworker.com</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> (11) 3040-4030</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> São Paulo, SP</a></li>
                 </ul>
             </div>
         </div>
+
         <div class="footer-bottom">
-            <p>&copy; 2025 PRONETWORKER. Todos os direitos reservados.</p>
+            <p>&copy; 2025 PRONETWORKER. Todos os direitos reservados. | <a href="#">Política de Privacidade</a> | <a
+                    href="#">Termos de Uso</a></p>
         </div>
     </footer>
 
-    <script src="../js/feed.js"></script>
+    <script src="../js/editar-perfil.js"></script>
 </body>
+
 </html>

@@ -21,7 +21,7 @@ function isUserLoggedIn(userType) {
 function setupPhoneMask(inputId) {
     const telefoneInput = document.getElementById(inputId);
     if (telefoneInput) {
-        telefoneInput.addEventListener('input', function(e) {
+        telefoneInput.addEventListener('input', function (e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length > 11) value = value.substring(0, 11);
             if (value.length > 0) value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
@@ -37,14 +37,14 @@ function validateAge(dateInputId, buttonId, errorMsgId) {
     const idadeError = document.getElementById(errorMsgId);
 
     if (dataNascimento && registerButton && idadeError) {
-        dataNascimento.addEventListener('change', function() {
+        dataNascimento.addEventListener('change', function () {
             const hoje = new Date();
             const nascimento = new Date(this.value);
             let idade = hoje.getFullYear() - nascimento.getFullYear();
             const mes = hoje.getMonth() - nascimento.getMonth();
-            
+
             if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) idade--;
-            
+
             if (idade >= 18) {
                 registerButton.disabled = false;
                 idadeError.textContent = '';
@@ -57,29 +57,29 @@ function validateAge(dateInputId, buttonId, errorMsgId) {
 }
 
 function setupLoginCandidato() {
-    const loginForm = document.getElementById('loginForm'); 
+    const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         const savedEmail = localStorage.getItem('lastRegisteredEmailCandidato');
         if (savedEmail) document.getElementById('email').value = savedEmail;
 
         const toggleIcon = loginForm.querySelector('.toggle-password');
         if (toggleIcon) {
-            toggleIcon.id = 'togglePasswordCandidato'; 
-            toggleIcon.addEventListener('click', function() {
-                togglePasswordVisibility('senha', 'togglePasswordCandidato'); 
+            toggleIcon.id = 'togglePasswordCandidato';
+            toggleIcon.addEventListener('click', function () {
+                togglePasswordVisibility('senha', 'togglePasswordCandidato');
             });
         }
 
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            const email = document.getElementById('email').value; 
+            const email = document.getElementById('email').value;
             const senha = document.getElementById('senha').value;
-            const userData = JSON.parse(localStorage.getItem('userDataCandidato')); 
-            
+            const userData = JSON.parse(localStorage.getItem('userDataCandidato'));
+
             if (userData && userData.email === email && userData.senha === senha) {
                 alert('Login de Candidato realizado com sucesso!');
-                localStorage.setItem('isLoggedInCandidato', 'true'); 
-                window.location.href = '../html/feed.html'; 
+                localStorage.setItem('isLoggedInCandidato', 'true');
+                window.location.href = '../html/feed.html';
             } else {
                 alert('E-mail ou senha de Candidato incorretos!');
             }
@@ -88,20 +88,20 @@ function setupLoginCandidato() {
 }
 
 function setupRegisterCandidato() {
-    const registerForm = document.getElementById('registerFormCandidato'); 
+    const registerForm = document.getElementById('registerFormCandidato');
     if (registerForm) {
-        document.getElementById('toggleCadPasswordCandidato')?.addEventListener('click', function() {
+        document.getElementById('toggleCadPasswordCandidato')?.addEventListener('click', function () {
             togglePasswordVisibility('cadSenhaCandidato', 'toggleCadPasswordCandidato');
         });
-        document.getElementById('toggleConfirmaPasswordCandidato')?.addEventListener('click', function() {
+        document.getElementById('toggleConfirmaPasswordCandidato')?.addEventListener('click', function () {
             togglePasswordVisibility('confirmSenhaCandidato', 'toggleConfirmaPasswordCandidato');
         });
 
-        registerForm.addEventListener('submit', function(e) {
+        registerForm.addEventListener('submit', function (e) {
             e.preventDefault();
             const senha = document.getElementById('cadSenhaCandidato').value;
             const confirmSenha = document.getElementById('confirmSenhaCandidato').value;
-            
+
             if (senha !== confirmSenha) {
                 alert('As senhas não coincidem!');
                 return;
@@ -111,92 +111,29 @@ function setupRegisterCandidato() {
                 nome: document.getElementById('nomeCandidato').value,
                 dataNascimento: document.getElementById('dataNascimentoCandidato').value,
                 telefone: document.getElementById('telefoneCandidato').value,
-                email: document.getElementById('emailCandidatoRegister').value, 
+                email: document.getElementById('emailCandidatoRegister').value,
                 senha: senha
             };
-            
-            localStorage.setItem('userDataCandidato', JSON.stringify(userData)); 
-            localStorage.setItem('lastRegisteredEmailCandidato', userData.email); 
-            
+
+            localStorage.setItem('userDataCandidato', JSON.stringify(userData));
+            localStorage.setItem('lastRegisteredEmailCandidato', userData.email);
+
             alert('Cadastro de Candidato realizado com sucesso!');
-            window.location.href = '../html/login.html'; 
-        });
-    }
-}
-
-function setupLoginEmpresa() {
-    const loginForm = document.getElementById('loginFormEmpresa');
-    if (loginForm) {
-        const savedEmail = localStorage.getItem('lastRegisteredEmailEmpresa');
-        if (savedEmail) document.getElementById('emailEmpresaLogin').value = savedEmail;
-
-        document.getElementById('togglePasswordEmpresa')?.addEventListener('click', function() {
-            togglePasswordVisibility('senhaEmpresaLogin', 'togglePasswordEmpresa');
-        });
-
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('emailEmpresaLogin').value;
-            const senha = document.getElementById('senhaEmpresaLogin').value;
-            const userData = JSON.parse(localStorage.getItem('userDataEmpresa')); 
-            
-            if (userData && userData.email === email && userData.senha === senha) {
-                alert('Login de Empresa realizado com sucesso!');
-                localStorage.setItem('isLoggedInEmpresa', 'true'); 
-                window.location.href = '../html/painel-empresa.html';
-            } else {
-                alert('E-mail ou senha de Empresa incorretos!');
-            }
-        });
-    }
-}
-
-function setupRegisterEmpresa() {
-    const registerForm = document.getElementById('registerFormEmpresa');
-    if (registerForm) {
-        document.getElementById('toggleCadPasswordEmpresa')?.addEventListener('click', function() {
-            togglePasswordVisibility('cadSenhaEmpresa', 'toggleCadPasswordEmpresa');
-        });
-        document.getElementById('toggleConfirmaPasswordEmpresa')?.addEventListener('click', function() {
-            togglePasswordVisibility('confirmSenhaEmpresa', 'toggleConfirmaPasswordEmpresa');
-        });
-
-        registerForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const senha = document.getElementById('cadSenhaEmpresa').value;
-            const confirmSenha = document.getElementById('confirmSenhaEmpresa').value;
-            
-            if (senha !== confirmSenha) {
-                alert('As senhas não coincidem!');
-                return;
-            }
-
-            const userData = {
-                nomeEmpresa: document.getElementById('nomeEmpresa').value,
-                telefone: document.getElementById('telefoneEmpresa').value,
-                email: document.getElementById('emailEmpresaRegister').value, 
-                senha: senha
-            };
-            
-            localStorage.setItem('userDataEmpresa', JSON.stringify(userData)); 
-            localStorage.setItem('lastRegisteredEmailEmpresa', userData.email); 
-            
-            alert('Cadastro de Empresa realizado com sucesso!');
-            window.location.href = '../html/login-empresa.html'; 
+            window.location.href = '../html/login.html';
         });
     }
 }
 
 function carregarVagas() {
     mostrarCarregando();
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
         todasVagas = [
             { id: 1, titulo: "Desenvolvedor Front-end", empresa: "Tech Solutions", tipo: "remoto", localizacao: "Remoto (Brasil)", contrato: "CLT", salario: "R$ 8.000 - 10.000", descricao: "Vaga para desenvolvedor com experiência em React e JavaScript.", postado: "há 2 dias", habilidades: ["HTML", "CSS", "JavaScript", "React"] },
             { id: 2, titulo: "Analista de Marketing", empresa: "Digital Growth", tipo: "hibrido", localizacao: "São Paulo", contrato: "PJ", salario: "R$ 6.000 - 8.000", descricao: "Vaga para analista com conhecimento em redes sociais e SEO.", postado: "há 1 semana", habilidades: ["Marketing", "Redes Sociais", "SEO"] },
             { id: 3, titulo: "Gerente de Projetos", empresa: "Consultoria Global", tipo: "presencial", localizacao: "Rio de Janeiro", contrato: "CLT", salario: "R$ 12.000 - 15.000", descricao: "Gerente com experiência em metodologias ágeis.", postado: "hoje", habilidades: ["Scrum", "Gestão", "Liderança"] }
         ];
-        
+
         vagasFiltradas = todasVagas.slice();
         mostrarVagas();
     }, 1000);
@@ -204,7 +141,7 @@ function carregarVagas() {
 
 function mostrarVagas() {
     containerVagas.innerHTML = '';
-    
+
     if (vagasFiltradas.length === 0) {
         containerVagas.innerHTML = `
             <div class="error-message">
@@ -213,8 +150,8 @@ function mostrarVagas() {
         `;
         return;
     }
-    
-    vagasFiltradas.forEach(function(vaga) {
+
+    vagasFiltradas.forEach(function (vaga) {
         var cardVaga = document.createElement('div');
         cardVaga.className = 'job-card';
         cardVaga.innerHTML = `
@@ -241,9 +178,9 @@ function mostrarVagas() {
                 <p>${vaga.descricao}</p>
                 
                 <div class="job-skills" style="margin-top: 1rem;">
-                    ${vaga.habilidades.map(function(habilidade) {
-                        return `<span class="skill-tag">${habilidade}</span>`;
-                    }).join('')}
+                    ${vaga.habilidades.map(function (habilidade) {
+            return `<span class="skill-tag">${habilidade}</span>`;
+        }).join('')}
                 </div>
             </div>
             
@@ -254,11 +191,11 @@ function mostrarVagas() {
                 </button>
             </div>
         `;
-        
+
         containerVagas.appendChild(cardVaga);
     });
-    
-    document.querySelectorAll('.apply-btn').forEach(function(botao) {
+
+    document.querySelectorAll('.apply-btn').forEach(function (botao) {
         botao.addEventListener('click', candidatarVaga);
     });
 }
@@ -275,10 +212,10 @@ function formatarTipo(tipo) {
 function candidatarVaga(evento) {
     var botao = evento.target;
     var idVaga = botao.getAttribute('data-id');
-    var vaga = todasVagas.find(function(v) { return v.id == idVaga; });
-    
+    var vaga = todasVagas.find(function (v) { return v.id == idVaga; });
+
     mostrarMensagemSucesso(`Você se candidatou para: ${vaga.titulo} na ${vaga.empresa}`);
-    
+
     botao.innerHTML = '<i class="fas fa-check"></i> Candidatado';
     botao.disabled = true;
     botao.style.backgroundColor = "var(--success)";
@@ -286,23 +223,23 @@ function candidatarVaga(evento) {
 
 function filtrarVagas(evento) {
     if (evento) evento.preventDefault();
-    
+
     var termo = document.getElementById('search-term').value.toLowerCase();
     var local = document.getElementById('search-location').value.toLowerCase();
-    
-    vagasFiltradas = todasVagas.filter(function(vaga) {
-        var correspondeTermo = vaga.titulo.toLowerCase().includes(termo) || 
-                                vaga.descricao.toLowerCase().includes(termo) ||
-                                vaga.empresa.toLowerCase().includes(termo) ||
-                                vaga.habilidades.some(function(h) { 
-                                    return h.toLowerCase().includes(termo); 
-                                });
-        
+
+    vagasFiltradas = todasVagas.filter(function (vaga) {
+        var correspondeTermo = vaga.titulo.toLowerCase().includes(termo) ||
+            vaga.descricao.toLowerCase().includes(termo) ||
+            vaga.empresa.toLowerCase().includes(termo) ||
+            vaga.habilidades.some(function (h) {
+                return h.toLowerCase().includes(termo);
+            });
+
         var correspondeLocal = vaga.localizacao.toLowerCase().includes(local);
-        
+
         return correspondeTermo && (local === '' || correspondeLocal);
     });
-    
+
     mostrarVagas();
 }
 
@@ -321,8 +258,8 @@ function mostrarMensagemSucesso(mensagem) {
             <i class="fas fa-check-circle"></i> ${mensagem}
         </div>
     `;
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
         mensagemStatus.innerHTML = '';
     }, 3000);
 }
@@ -333,14 +270,14 @@ if (formularioBusca) {
     document.getElementById('search-location')?.addEventListener('input', filtrarVagas);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     if (viewAllLink) {
         viewAllLink.addEventListener('click', (event) => {
             event.preventDefault();
-            if (isUserLoggedIn('Candidato')) { 
-                window.location.href = '../html/todas-as-vagas.html'; 
+            if (isUserLoggedIn('Candidato')) {
+                window.location.href = '../html/index.html';
             } else {
-                window.location.href = '../html/login.html'; 
+                window.location.href = '../html/login.html';
             }
         });
     }
@@ -348,13 +285,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (containerVagas) {
         carregarVagas();
     }
-    
+
     setupLoginCandidato();
-    setupPhoneMask('telefoneCandidato'); 
+    setupPhoneMask('telefoneCandidato');
     validateAge('dataNascimentoCandidato', 'registerButtonCandidato', 'idadeErrorCandidato');
     setupRegisterCandidato();
-
-    setupLoginEmpresa();
-    setupPhoneMask('telefoneEmpresa'); 
-    setupRegisterEmpresa();
 });

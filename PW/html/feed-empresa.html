@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feed Empresa - PRONETWORKER</title>
+    <title>PRONETWORKER</title>
     <link rel="stylesheet" href="../css/feed-empresa.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -17,14 +17,13 @@
 
             <div class="nav-links">
                 <li><a href="#" class="active"><i class="ri-home-line"></i> Início</a></li>
-                <li><a href="#" id="my-vacancies-link"><i class="ri-briefcase-line"></i> Minhas Vagas</a></li>
+                <li><a href="../html/vagas-empresa.html" id="my-vacancies-link"><i class="ri-briefcase-line"></i> Minhas Vagas</a></li>
                 <li>
                     <a href="#" class="nav-link notification">
                         <i class="ri-notification-line"></i> Notificações
                         <div class="badge">2</div>
                     </a>
                 </li>
-                <li><a href="#profile-card-container" id="nav-profile-link"><i class="ri-building-line"></i> Perfil Empresa</a></li>
             </div>
 
             <div class="header-profile auth-buttons">
@@ -42,7 +41,6 @@
     <main class="main">
         <div class="left-main">
             <div class="left-main-1 profile-card-container">
-                <img src="../assets/pattern-banner.png" alt="Banner do perfil da empresa" class="banner">
                 <img id="my-profile-pic" src="../assets/Captura de tela 2025-06-02 174843.png" alt="Logo da empresa" class="my-picture">
                 <input type="file" id="upload-pic" accept="image/*">
                 <div class="about">
@@ -83,6 +81,19 @@
                         <input type="text" id="vacancy-location" placeholder="Ex: São Paulo, Remoto" required>
                     </div>
                     <div class="form-group">
+                        <label for="vacancy-schedule">Horário de Trabalho:</label>
+                        <input type="text" id="vacancy-schedule" placeholder="Ex: Período integral, Flexível, 9h-18h" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vacancy-salary">Salário:</label>
+                        <input type="text" id="vacancy-salary" placeholder="Ex: R$ 1.500 (estágio), R$ 3.000 - R$ 5.000 (CLT)" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vacancy-benefits">Benefícios:</label>
+                        <textarea id="vacancy-benefits" rows="3" placeholder="Ex: Vale-refeição, Plano de saúde, Gympass, Auxílio home office"></textarea>
+                    </div>
+
+                    <div class="form-group">
                         <label for="vacancy-type">Tipo de Contrato:</label>
                         <select id="vacancy-type" required>
                             <option value="">Selecione</option>
@@ -93,25 +104,20 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="vacancy-description">Descrição da Vaga:</label>
-                        <textarea id="vacancy-description" rows="5" placeholder="Descreva os requisitos, responsabilidades e benefícios..." required></textarea>
+                        <label for="vacancy-summary">Resumo da Vaga:</label>
+                        <textarea id="vacancy-summary" rows="4" placeholder="Fale um pouco sobre o que é a vaga e o que a empresa oferece..."></textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="vacancy-requirements">Requisitos Obrigatórios (Opcional):</label>
+                        <textarea id="vacancy-requirements" rows="5" placeholder="O que é essencial que a pessoa tenha? (Ex: Experiência em React, Inglês fluente)"></textarea>
+                    </div>
+
                     <button type="submit" class="btn btn-accent" id="post-vacancy-button">Publicar Vaga</button>
                     <button type="button" class="btn btn-outline" id="cancel-edit-button" style="display:none;">Cancelar Edição</button>
                 </form>
             </div>
 
-            <div class="middle-main-2 company-job-listings-container">
-                <h2>Minhas Vagas Publicadas</h2>
-                <div class="loading-message" id="vacancies-loading-message" style="display:none;">
-                    <div class="spinner"></div>
-                    <p>Carregando suas vagas...</p>
-                </div>
-                <div id="company-vacancies-list">
-                    <p class="no-vacancies-message">Nenhuma vaga publicada ainda. Comece a publicar!</p>
-                </div>
             </div>
-        </div>
 
         <div class="right-main">
             <div class="right-main-2 news-feed-card">
@@ -139,11 +145,16 @@
         </div>
     </main>
 
-    <footer>
+ <footer>
         <div class="footer-container">
             <div class="footer-about">
-                <a href="#" class="footer-logo">PRONETWORKER <i class="ri-network-line"></i></a>
-                <p>Conectando profissionais, impulsionando carreiras. Sua rede para o sucesso.</p>
+                <a href="#" class="footer-logo">
+                    <i class="fas fa-network-wired"></i> PRONETWORKER
+                </a>
+                <p>
+                    Conecte-se com profissionais de diversas áreas, amplie suas oportunidades de carreira 
+                    e fortaleça sua rede de contatos
+                </p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
@@ -151,35 +162,37 @@
                     <a href="#"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
+            
             <div class="footer-links">
-                <h3>Links Úteis</h3>
+                <h3>Para Candidatos</h3>
                 <ul>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Sobre Nós</a></li>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Termos de Serviço</a></li>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Política de Privacidade</a></li>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Ajuda</a></li>
+                    <li><a href="#">Buscar Vagas</a></li>
+                    <li><a href="#">Cadastrar Currículo</a></li>
+                    <li><a href="#">Dicas de Carreira</a></li>
                 </ul>
             </div>
+            
             <div class="footer-links">
-                <h3>Serviços</h3>
+                <h3>Para Empresas</h3>
                 <ul>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Publicar Vaga</a></li>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Anunciar</a></li>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Perfil Premium</a></li>
-                    <li><a href="#"><i class="ri-arrow-right-s-line"></i> Consultoria</a></li>
+                    <li><a href="#">Anunciar Vagas</a></li>
+                    <li><a href="#">Buscar Talentos</a></li>
+                    <li><a href="#">Planos</a></li>
                 </ul>
             </div>
+            
             <div class="footer-links">
                 <h3>Contato</h3>
                 <ul>
-                    <li><a href="#"><i class="ri-map-pin-line"></i> Rua Exemplo, 123 - Cidade, Estado</a></li>
-                    <li><a href="#"><i class="ri-phone-line"></i> (XX) XXXX-XXXX</a></li>
-                    <li><a href="#"><i class="ri-mail-line"></i> contato@pronetworker.com</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> contato@proneworker.com</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> (11) 3040-4030</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> São Paulo, SP</a></li>
                 </ul>
             </div>
         </div>
+        
         <div class="footer-bottom">
-            <p>&copy; 2025 PRONETWORKER. Todos os direitos reservados.</p>
+            <p>&copy; 2025 PRONETWORKER. Todos os direitos reservados. | <a href="#">Política de Privacidade</a> | <a href="#">Termos de Uso</a></p>
         </div>
     </footer>
 
