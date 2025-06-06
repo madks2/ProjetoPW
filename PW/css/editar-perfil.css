@@ -102,14 +102,14 @@ body {
     min-height: 100px;
 }
 
-.profile-photo-area {
+.profile-picture-section {
     text-align: center;
     margin-bottom: 30px;
     padding-bottom: 20px;
     border-bottom: 1px solid var(--gray-light);
 }
 
-.profile-photo-area img#profilePhotoPreview {
+.profile-picture-preview {
     width: 140px;
     height: 140px;
     border-radius: 50%;
@@ -121,16 +121,16 @@ body {
     transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
-.profile-photo-area img#profilePhotoPreview:hover {
+.profile-picture-preview:hover {
     transform: scale(1.05);
     border-color: var(--secondary);
 }
 
-.profile-photo-area input[type="file"] {
+input[type="file"]#profilePhotoInput {
     display: none;
 }
 
-.profile-photo-area .custom-file-upload {
+.upload-photo-button {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -145,16 +145,16 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.profile-photo-area .custom-file-upload:hover {
+.upload-photo-button:hover {
     background-color: var(--secondary);
     transform: translateY(-2px);
 }
 
-.profile-photo-area .custom-file-upload i {
+.upload-photo-button i {
     font-size: 1.1em;
 }
 
-.submit-resume-button {
+.save-changes-button {
     background-color: var(--primary);
     color: white;
     border: none;
@@ -168,7 +168,7 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.submit-resume-button:hover {
+.save-changes-button:hover {
     background-color: var(--secondary);
 }
 
@@ -205,15 +205,15 @@ body {
     .resume-form-card legend {
         font-size: 1.1em;
     }
-    .submit-resume-button {
+    .save-changes-button {
         padding: 12px 20px;
         font-size: 1em;
     }
-    .profile-photo-area img#profilePhotoPreview {
+    .profile-picture-preview {
         width: 100px;
         height: 100px;
     }
-    .profile-photo-area .custom-file-upload {
+    .upload-photo-button {
         padding: 8px 15px;
         font-size: 0.85em;
     }

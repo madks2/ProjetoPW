@@ -3,19 +3,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const profilePhotoPreview = document.getElementById('profilePhotoPreview');
     const profilePhotoInput = document.getElementById('profilePhotoInput');
     const tituloProfissionalInput = document.getElementById('tituloProfissional');
-    const miniResumoTextarea = document.getElementById('miniResumo');
+    const nomeCompletoInput = document.getElementById('nomeCompleto');
+
+    let newProfilePhotoDataURL = null;
 
     function loadProfileData() {
         const userDataString = localStorage.getItem('userDataCandidato');
         if (userDataString) {
-            const userData = JSON.parse(userDataString);
-            if (userData.profilePhoto) {
-                profilePhotoPreview.src = userData.profilePhoto;
-            } else {
-                profilePhotoPreview.src = "../assets/default-avatar.png";
+            try {
+                const userData = JSON.parse(userDataString);
+                if (userData.profilePhoto && userData.profilePhoto !== "null" && userData.profilePhoto !== "") {
+                    profilePhotoPreview.src = userData.profilePhoto;
+                    newProfilePhotoDataURL = userData.profilePhoto;
+                } else {
+                    profilePhotoPreview.src = "";
+                    newProfilePhotoDataURL = "";
+                }
+                nomeCompletoInput.value = userData.nomeCompleto || '';
+                tituloProfissionalInput.value = userData.tituloProfissional || '';
+            } catch (e) {
+                profilePhotoPreview.src = "";
+                newProfilePhotoDataURL = "";
             }
-            tituloProfissionalInput.value = userData.tituloProfissional || '';
-            miniResumoTextarea.value = userData.miniResumo || '';
+        } else {
+            profilePhotoPreview.src = "";
+            newProfilePhotoDataURL = "";
         }
     }
 
@@ -26,8 +38,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     profilePhotoPreview.src = e.target.result;
+                    newProfilePhotoDataURL = e.target.result;
+                };
+                reader.onerror = function(e) {
+                    alert('Erro ao carregar a imagem. Tente novamente.');
                 };
                 reader.readAsDataURL(file);
+            } else {
+                newProfilePhotoDataURL = localStorage.getItem('userDataCandidato') ? (JSON.parse(localStorage.getItem('userDataCandidato')).profilePhoto || "") : "";
+                profilePhotoPreview.src = newProfilePhotoDataURL;
             }
         });
     }
@@ -35,11 +54,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (editProfileForm) {
         editProfileForm.addEventListener('submit', function(e) {
             e.preventDefault();
+
             const userDataString = localStorage.getItem('userDataCandidato');
             let userData = userDataString ? JSON.parse(userDataString) : {};
-            userData.profilePhoto = profilePhotoPreview.src;
+
+            userData.profilePhoto = newProfilePhotoDataURL;
+            userData.nomeCompleto = nomeCompletoInput.value;
             userData.tituloProfissional = tituloProfissionalInput.value;
-            userData.miniResumo = miniResumoTextarea.value;
+
             localStorage.setItem('userDataCandidato', JSON.stringify(userData));
             alert('Perfil atualizado com sucesso!');
             window.location.href = 'feed.html';

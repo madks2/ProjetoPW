@@ -15,51 +15,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const uploadPicInput = document.getElementById('upload-pic');
-    const myPicture = document.querySelector('.profile-card-container .my-picture');
     const headerProfilePic = document.getElementById('header-profile-pic');
+    const myPicture = document.getElementById('my-profile-pic');
+    const profileUserNameElement = document.getElementById('profile-user-name');
+    const headerUserNameElement = document.getElementById('header-user-name');
+    const profileTituloProfissionalElement = document.getElementById('profile-titulo-profissional');
 
-    if (uploadPicInput && myPicture && headerProfilePic) {
-        uploadPicInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    myPicture.src = e.target.result;
-                    headerProfilePic.src = e.target.result;
-                    localStorage.setItem('userProfilePicture', e.target.result);
-                };
-                reader.readAsDataURL(file);
+    function loadAndDisplayProfileData() {
+        const userDataString = localStorage.getItem('userDataCandidato');
+        let userData = {};
+
+        if (userDataString) {
+            try {
+                userData = JSON.parse(userDataString);
+            } catch (e) {
+                console.error("Erro ao fazer parse de userDataCandidato do localStorage:", e);
             }
-        });
-    }
+        }
 
-    const savedProfilePic = localStorage.getItem('userProfilePicture');
-    if (savedProfilePic) {
-        if (myPicture) myPicture.src = savedProfilePic;
-        if (headerProfilePic) headerProfilePic.src = savedProfilePic;
-    } else {
-        if (myPicture) myPicture.src = '../assets/placeholder-profile.png';
-        if (headerProfilePic) headerProfilePic.src = '../assets/placeholder-profile.png';
-    }
+        const profilePhoto = userData.profilePhoto || '';
+        if (myPicture) myPicture.src = profilePhoto;
+        if (headerProfilePic) headerProfilePic.src = profilePhoto;
 
-    const viewAllLink = document.querySelector('.view-all-link');
+        const personName = userData.nomeCompleto || 'Novo Usuário';
+        const professionalTitle = userData.tituloProfissional || 'Adicione seu Cargo';
 
-    function isUserLoggedIn() {
-        return localStorage.getItem('isLoggedIn') === 'true';
-    }
-
-    if (viewAllLink) {
-        viewAllLink.addEventListener('click', (event) => {
-            event.preventDefault();
-
-            if (isUserLoggedIn()) {
-                window.location.href = 'todas-as-vagas.html';
-            } else {
-                window.location.href = 'login.html';
+        if (profileUserNameElement) {
+            profileUserNameElement.textContent = personName;
+        }
+        if (headerUserNameElement) {
+            const arrowIcon = headerUserNameElement.querySelector('.ri-arrow-down-s-fill');
+            headerUserNameElement.textContent = personName + ' ';
+            if (arrowIcon) {
+                headerUserNameElement.appendChild(arrowIcon);
             }
-        });
+        }
+
+        if (profileTituloProfissionalElement) {
+            profileTituloProfissionalElement.textContent = professionalTitle;
+        }
     }
+
+    loadAndDisplayProfileData();
 
     let todasVagas = [];
     let vagasFiltradas = [];
@@ -274,7 +271,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                console.error('Erro na resposta da API da Currents:', errorData);
                 throw new Error(`Erro da API da Currents: ${response.status} - ${errorData.message || 'Erro desconhecido'}`);
             }
 
@@ -296,7 +292,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         } catch (error) {
-            console.error('Erro ao buscar notícias da Currents API:', error);
             newsArticlesContainer.innerHTML = '<p class="error-message">Não foi possível carregar as notícias no momento. Tente novamente mais tarde.</p>';
         } finally {
             if (loadingMessageNews) loadingMessageNews.style.display = 'none';
@@ -305,107 +300,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetchCurrentsTechNews();
 
-    function loadUserName() {
-        const profileUserNameElement = document.getElementById('profile-user-name');
-        const headerUserNameElement = document.getElementById('header-user-name');
-        const userDataString = localStorage.getItem('userDataCandidato');
+    function isUserLoggedIn() {
+        return localStorage.getItem('isLoggedIn') === 'true';
+    }
 
-        if (userDataString) {
-            try {
-                const userData = JSON.parse(userDataString);
-                const userName = userData.nome;
+    const viewAllLink = document.querySelector('.view-all-link');
+    if (viewAllLink) {
+        viewAllLink.addEventListener('click', (event) => {
+            event.preventDefault();
 
-                if (userName) {
-                    if (profileUserNameElement) {
-                        profileUserNameElement.textContent = userName;
-                    }
-                    if (headerUserNameElement) {
-                        const arrowIcon = headerUserNameElement.querySelector('.ri-arrow-down-s-fill');
-                        headerUserNameElement.textContent = userName + ' ';
-                        if (arrowIcon) {
-                            headerUserNameElement.appendChild(arrowIcon);
-                        }
-                    }
-                } else {
-                    if (profileUserNameElement) profileUserNameElement.textContent = "Meu Perfil";
-                    if (headerUserNameElement) {
-                        const arrowIcon = headerUserNameElement.querySelector('.ri-arrow-down-s-fill');
-                        headerUserNameElement.textContent = "Eu ";
-                        if (arrowIcon) headerUserNameElement.appendChild(arrowIcon);
-                    }
-                }
-            } catch (e) {
-                console.error("Erro ao fazer parse de userDataCandidato do localStorage:", e);
-                if (profileUserNameElement) profileUserNameElement.textContent = "Meu Perfil";
-                if (headerUserNameElement) {
-                    const arrowIcon = headerUserNameElement.querySelector('.ri-arrow-down-s-fill');
-                    headerUserNameElement.textContent = "Eu ";
-                    if (arrowIcon) headerUserNameElement.appendChild(arrowIcon);
-                }
+            if (isUserLoggedIn()) {
+                window.location.href = 'todas-as-vagas.html';
+            } else {
+                window.location.href = 'login.html';
             }
-        } else {
-            if (profileUserNameElement) profileUserNameElement.textContent = "Meu Perfil";
-            if (headerUserNameElement) {
-                const arrowIcon = headerUserNameElement.querySelector('.ri-arrow-down-s-fill');
-                headerUserNameElement.textContent = "Eu ";
-                if (arrowIcon) headerUserNameElement.appendChild(arrowIcon);
-            }
-        }
-    }
-
-    loadUserName();
-
-    const profileDescriptionDisplayElement = document.getElementById('profileDescriptionDisplay');
-    const editProfileModal = document.getElementById('editProfileModal');
-    const profileDescriptionInput = document.getElementById('profileDescriptionInput');
-    const editProfileForm = document.getElementById('editProfileForm');
-    const editProfileButton = document.querySelector('.edit-profile-button.edit-pic-button');
-
-    function loadAndDisplayProfileDescription() {
-        const storedDescription = localStorage.getItem('userProfileDescription');
-        if (profileDescriptionDisplayElement) {
-            profileDescriptionDisplayElement.textContent = storedDescription || "Adicione uma descrição ao seu perfil!";
-        }
-    }
-
-    function openEditProfileModal() {
-        if (editProfileModal && profileDescriptionInput) {
-            editProfileModal.style.display = 'block';
-            const currentDescription = localStorage.getItem('userProfileDescription');
-            profileDescriptionInput.value = currentDescription || '';
-        }
-    }
-
-    function closeEditProfileModal() {
-        if (editProfileModal) {
-            editProfileModal.style.display = 'none';
-        }
-    }
-
-    if (editProfileButton) {
-        editProfileButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            openEditProfileModal();
         });
     }
-
-    if (editProfileForm) {
-        editProfileForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const newDescription = profileDescriptionInput.value;
-            localStorage.setItem('userProfileDescription', newDescription);
-
-            alert('Descrição do perfil salva com sucesso!');
-            loadAndDisplayProfileDescription();
-            closeEditProfileModal();
-        });
-    }
-
-    const cancelEditButton = document.querySelector('#editProfileModal button[type="button"]');
-    if (cancelEditButton) {
-        cancelEditButton.addEventListener('click', closeEditProfileModal);
-    }
-
-    loadAndDisplayProfileDescription();
-});
+}); 
