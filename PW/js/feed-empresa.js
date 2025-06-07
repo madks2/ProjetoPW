@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const token = getAuthToken();
         if (!token) {
             console.warn('Nenhum token de autenticação da empresa encontrado. Não será possível buscar dados da API.');
+            loadWeatherForCompanyLocation();
             return;
         }
 
@@ -78,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!response.ok) {
                 console.error('Falha ao carregar perfil da empresa da API:', response.status, response.statusText);
+                loadWeatherForCompanyLocation();
                 return;
             }
 
@@ -99,8 +101,10 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('companyApplicationsReceived', data.applicationsReceived || storedApplicationsReceived);
             localStorage.setItem('companyLocation', data.location || storedCompanyLocation);
 
+            loadWeatherForCompanyLocation();
         } catch (error) {
             console.error('Erro ao buscar dados do perfil da empresa:', error);
+            loadWeatherForCompanyLocation();
         }
     }
 
@@ -211,12 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Erro ao fazer upload do logo: ' + error.message);
             }
         });
-
-        const savedCompanyLogo = localStorage.getItem('companyLogoUrl');
-        if (savedCompanyLogo) {
-            myProfilePic.src = savedCompanyLogo;
-            headerProfilePic.src = savedCompanyLogo;
-        }
     }
 
     if (editCompanyProfileBtn && editCompanyModal && closeCompanyModalButton && editCompanyForm) {
@@ -422,6 +420,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loadCompanyProfileData();
-    loadWeatherForCompanyLocation();
     loadVacancies();
 });

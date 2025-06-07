@@ -111,23 +111,23 @@ function clearAddressFields() {
 
 
 function setupLoginCandidato() {
-    const loginForm = document.getElementById('loginForm');
+  const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         const savedEmail = localStorage.getItem('lastRegisteredEmailCandidato');
-        if (savedEmail) document.getElementById('emailCandidatoLogin').value = savedEmail;
+        if (savedEmail) document.getElementById('email').value = savedEmail;
 
         const toggleIcon = loginForm.querySelector('.toggle-password');
         if (toggleIcon) {
-            toggleIcon.id = 'togglePasswordCandidato';
+            toggleIcon.id = 'togglePasswordLogin';
             toggleIcon.addEventListener('click', function () {
-                togglePasswordVisibility('senhaCandidatoLogin', 'togglePasswordCandidato');
+                togglePasswordVisibility('senha', 'togglePasswordLogin');
             });
         }
 
         loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            const email = document.getElementById('emailCandidatoLogin').value;
-            const senha = document.getElementById('senhaCandidatoLogin').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
             const userData = JSON.parse(localStorage.getItem('userDataCandidato'));
 
             if (userData && userData.email === email && userData.senha === senha) {
@@ -143,8 +143,7 @@ function setupLoginCandidato() {
                 localStorage.setItem('candidatoCidade', userData.cidade);
                 localStorage.setItem('candidatoEstado', userData.estado);
 
-
-                window.location.href = '../html/feed-candidato.html';
+                window.location.href = '../html/feed.html';
             } else {
                 alert('E-mail ou senha de Candidato incorretos!');
             }
@@ -259,7 +258,7 @@ function setupRegisterCandidato() {
             localStorage.setItem('lastRegisteredEmailCandidato', userData.email);
 
             alert('Cadastro de Candidato realizado com sucesso!');
-            window.location.href = '../html/login-candidato.html';
+            window.location.href = '../html/login.html';
         });
     }
 }
