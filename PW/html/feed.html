@@ -40,13 +40,13 @@
     </header>
 
     <main class="main">
-    <div class="left-main">
-        <div class="left-main-1 profile-card-container">
-            <img id="my-profile-pic" src="" alt="Foto de perfil" class="my-picture">
-            <div class="about">
-                <h5 id="profile-user-name">Nome da Pessoa</h5>
-                <p id="profile-titulo-profissional" class="profile-title"></p>
-                <a href="../html/editar-perfil.html" class="edit-profile-button edit-pic-button"><i
+        <div class="left-main">
+            <div class="left-main-1 profile-card-container">
+                <img id="my-profile-pic" src="" alt="Foto de perfil" class="my-picture">
+                <div class="about">
+                    <h5 id="profile-user-name">Nome da Pessoa</h5>
+                    <p id="profile-titulo-profissional" class="profile-title"></p>
+                    <a href="../html/editar-perfil.html" class="edit-profile-button edit-pic-button"><i
                             class="ri-pencil-line"></i> Editar Perfil</a>
                 </div>
                 <div class="analytics">
@@ -71,6 +71,14 @@
                     <h2 class="section-title"><i class="fas fa-star"></i> Vagas de Emprego Recentes</h2>
                 </div>
 
+                <div class="search-and-filter">
+                    <form id="filter-form">
+                        <input type="text" id="search-term" placeholder="Buscar por título, empresa, habilidade...">
+                        <input type="text" id="search-location" placeholder="Localização (ex: São Paulo, Remoto)">
+                        <button type="submit" class="btn btn-primary"><i class="ri-search-line"></i> Buscar
+                            Vagas</button>
+                    </form>
+                </div>
                 <div id="status-message"></div>
                 <div id="jobs-container" class="jobs-grid">
                     <div class="loading">
@@ -81,9 +89,11 @@
             </section>
         </div>
 
-        <div class="right-main-2 news-feed-card">
-            <h4>Notícias</h4>
-            <div id="news-articles"></div>
+        <div class="right-main-2 weather-card" id="weather-card">
+            <h4>Clima em <span id="weather-city-display"></span></h4>
+            <div id="weather-display" class="weather-info">
+                <p>Carregando dados do tempo...</p>
+            </div>
         </div>
     </main>
 
@@ -94,7 +104,7 @@
                     <i class="fas fa-network-wired"></i> PRONETWORKER
                 </a>
                 <p>
-                    Conecte-se com profissionais de diversas áreas, amplie suas oportunidades de carreira 
+                    Conecte-se com profissionais de diversas áreas, amplie suas oportunidades de carreira
                     e fortaleça sua rede de contatos
                 </p>
                 <div class="social-links">
@@ -104,7 +114,7 @@
                     <a href="#"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
-            
+
             <div class="footer-links">
                 <h3>Para Candidatos</h3>
                 <ul>
@@ -113,7 +123,7 @@
                     <li><a href="#">Dicas de Carreira</a></li>
                 </ul>
             </div>
-            
+
             <div class="footer-links">
                 <h3>Para Empresas</h3>
                 <ul>
@@ -122,7 +132,7 @@
                     <li><a href="#">Planos</a></li>
                 </ul>
             </div>
-            
+
             <div class="footer-links">
                 <h3>Contato</h3>
                 <ul>
@@ -132,9 +142,10 @@
                 </ul>
             </div>
         </div>
-        
+
         <div class="footer-bottom">
-            <p>&copy; 2025 PRONETWORKER. Todos os direitos reservados. | <a href="#">Política de Privacidade</a> | <a href="#">Termos de Uso</a></p>
+            <p>&copy; 2025 PRONETWORKER. Todos os direitos reservados. | <a href="#">Política de Privacidade</a> | <a
+                    href="#">Termos de Uso</a></p>
         </div>
     </footer>
 

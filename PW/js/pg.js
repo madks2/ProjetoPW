@@ -145,6 +145,14 @@ function formatarTipo(tipo) {
 }
 
 function candidatarVaga(evento) {
+    if (!isUserLoggedIn()) {
+        mostrarMensagemErro('Você precisa estar logado para se candidatar a uma vaga.');
+        setTimeout(() => {
+            window.location.href = 'login.html'; // Redireciona para a página de login
+        }, 1500); // Dá um tempo para o usuário ler a mensagem de erro
+        return; 
+    }
+
     var botao = evento.target;
     var idVaga = botao.getAttribute('data-id');
     var vaga = todasVagas.find(function(v) { return v.id == idVaga; });
@@ -191,6 +199,18 @@ function mostrarMensagemSucesso(mensagem) {
     mensagemStatus.innerHTML = `
         <div class="success-message">
             <i class="fas fa-check-circle"></i> ${mensagem}
+        </div>
+    `;
+    
+    setTimeout(function() {
+        mensagemStatus.innerHTML = '';
+    }, 3000);
+}
+
+function mostrarMensagemErro(mensagem) {
+    mensagemStatus.innerHTML = `
+        <div class="error-message">
+            <i class="fas fa-times-circle"></i> ${mensagem}
         </div>
     `;
     

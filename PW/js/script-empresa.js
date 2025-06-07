@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const complementoInput = document.getElementById('complemento');
     const numeroInput = document.getElementById('numero');
     const cepError = document.getElementById('cepError');
-
     const termosCheckbox = document.getElementById('termos');
     const registerButton = document.getElementById('registerButton');
 
@@ -184,13 +183,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     email: document.getElementById('email').value,
                     responsavel: document.getElementById('responsavel') ? document.getElementById('responsavel').value : '',
                     cargo: document.getElementById('cargo') ? document.getElementById('cargo').value : '',
-                    senha: senha
+                    senha: senha,
+                    tagline: '', 
+                    logoUrl: 'https://via.placeholder.com/90',
+                    vacancyViews: '0',
+                    applicationsReceived: '0'
                 };
 
                 localStorage.setItem('empresaData', JSON.stringify(empresaData));
-                localStorage.setItem('companyName', empresaData.razaoSocial);
-                localStorage.setItem('companyLocation', (empresaData.cidade || '') + ' - ' + (empresaData.estado || '')); 
                 localStorage.setItem('companyAuthToken', 'simulated_token_for_company_' + empresaData.email);
+                localStorage.setItem('companyName', empresaData.razaoSocial);
+                localStorage.setItem('companyTagline', empresaData.tagline); 
+                localStorage.setItem('companyLogoUrl', empresaData.logoUrl); 
+                localStorage.setItem('companyLocation', (empresaData.cidade || '') + ' - ' + (empresaData.estado || '')); 
+                localStorage.setItem('companyVacancyViews', empresaData.vacancyViews);
+                localStorage.setItem('companyApplicationsReceived', empresaData.applicationsReceived);
 
                 alert('Cadastro realizado com sucesso! Faça login para continuar.');
                 window.location.href = '../html/login-empresa.html';
@@ -213,13 +220,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 const empresaData = JSON.parse(localStorage.getItem('empresaData'));
 
                 if (empresaData && empresaData.email === email && empresaData.senha === senha) {
-                    localStorage.setItem('companyName', empresaData.razaoSocial);
                     localStorage.setItem('companyAuthToken', 'simulated_token_for_company_' + empresaData.email);
+                    localStorage.setItem('lastEmpresaEmail', email); 
                     
-                    if (empresaData.cidade && empresaData.estado) {
-                        localStorage.setItem('companyLocation', empresaData.cidade + ' - ' + empresaData.estado);
-                    }
-                    
+                    localStorage.setItem('companyName', empresaData.razaoSocial || 'Nome da Empresa');
+                    localStorage.setItem('companyTagline', empresaData.tagline || ''); 
+                    localStorage.setItem('companyLogoUrl', empresaData.logoUrl || 'https://via.placeholder.com/90');
+                    localStorage.setItem('companyLocation', (empresaData.cidade || '') + ' - ' + (empresaData.estado || ''));
+                    localStorage.setItem('companyVacancyViews', empresaData.vacancyViews || '0');
+                    localStorage.setItem('companyApplicationsReceived', empresaData.applicationsReceived || '0');
+
                     alert('Login realizado com sucesso!');
                     window.location.href = '../html/feed-empresa.html';
                 } else {

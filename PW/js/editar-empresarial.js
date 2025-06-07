@@ -1,85 +1,86 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const API_BASE_URL = 'http://localhost:3000'; 
-    const API_COMPANY_PROFILE_ENDPOINT = '/api/company/profile'; 
-
-    function getAuthToken() {
-        return localStorage.getItem('companyAuthToken');
-    }
-
+document.addEventListener('DOMContentLoaded', function() {
+    const editProfileForm = document.getElementById('editProfileForm');
+    const profilePhotoPreview = document.getElementById('profilePhotoPreview');
+    const profilePhotoInput = document.getElementById('profilePhotoInput');
     const companyTaglineEdit = document.getElementById('companyTaglineEdit');
-    const editTaglineForm = document.getElementById('editTaglineForm'); 
 
-    async function loadCurrentTagline() {
-        const storedTagline = localStorage.getItem('companyTagline') || '';
-        if (companyTaglineEdit) {
-            companyTaglineEdit.value = storedTagline;
-        }
+    let newProfilePhotoDataURL = null;
 
-        const token = getAuthToken();
-        if (!token) {
-            console.warn('Nenhum token de autenticação encontrado. Não foi possível buscar o slogan da API.');
-            return;
-        }
-
-        try {
-            const response = await fetch(`${API_BASE_URL}${API_COMPANY_PROFILE_ENDPOINT}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+    function loadCompanyProfileData() {
+        const companyDataString = localStorage.getItem('companyProfileData');
+        if (companyDataString) {
+            try {
+                const companyData = JSON.parse(companyDataString);
+                if (companyData.profilePhoto && companyData.profilePhoto !== "null" && companyData.profilePhoto !== "") {
+                    profilePhotoPreview.src = companyData.profilePhoto;
+                    newProfilePhotoDataURL = companyData.profilePhoto;
+                } else {
+                    profilePhotoPreview.src = "";
+                    newProfilePhotoDataURL = "";
                 }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (companyTaglineEdit) {
-                    companyTaglineEdit.value = data.tagline || storedTagline; 
-                    localStorage.setItem('companyTagline', data.tagline || storedTagline); 
-                }
-            } else {
-                console.error('Falha ao carregar slogan da API:', response.status, response.statusText);
+                companyTaglineEdit.value = companyData.tagline || '';
+            } catch (e) {
+                console.error('Error parsing companyProfileData from localStorage:', e);
+                profilePhotoPreview.src = "";
+                newProfilePhotoDataURL = "";
+                companyTaglineEdit.value = '';
             }
-        } catch (error) {
-            console.error('Erro ao buscar slogan:', error);
+        } else {
+            profilePhotoPreview.src = "";
+            newProfilePhotoDataURL = "";
+            companyTaglineEdit.value = '';
         }
     }
 
-    if (editTaglineForm) {
-        editTaglineForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const newTagline = companyTaglineEdit.value; 
-            const token = getAuthToken();
-
-            if (!token) {
-                alert('Você precisa estar logado para atualizar o slogan.');
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_BASE_URL}${API_COMPANY_PROFILE_ENDPOINT}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ tagline: newTagline })
-                });
-
-                if (response.ok) {
-                    localStorage.setItem('companyTagline', newTagline);
-                    alert('Slogan atualizado com sucesso!');
-                    window.location.href = '../html/feed-empresa.html';
+    if (profilePhotoInput) {
+        profilePhotoInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profilePhotoPreview.src = e.target.result;
+                    newProfilePhotoDataURL = e.target.result;
+                };
+                reader.onerror = function(e) {
+                    console.error('FileReader error:', e);
+                    alert('Erro ao carregar a imagem. Tente novamente.');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                const currentData = localStorage.getItem('companyProfileData');
+                if (currentData) {
+                    const parsedData = JSON.parse(currentData);
+                    newProfilePhotoDataURL = parsedData.profilePhoto || "";
+                    profilePhotoPreview.src = newProfilePhotoDataURL || "";
                 } else {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Falha ao atualizar slogan.');
+                    newProfilePhotoDataURL = "";
+                    profilePhotoPreview.src = "";
                 }
-            } catch (error) {
-                console.error('Erro ao salvar slogan:', error);
-                alert('Erro ao salvar slogan: ' + error.message);
             }
         });
     }
 
-    loadCurrentTagline();
+    if (editProfileForm) {
+        editProfileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            try {
+                const companyDataString = localStorage.getItem('companyProfileData');
+                let companyData = companyDataString ? JSON.parse(companyDataString) : {};
+
+                companyData.profilePhoto = newProfilePhotoDataURL;
+                companyData.tagline = companyTaglineEdit.value;
+
+                localStorage.setItem('companyProfileData', JSON.stringify(companyData));
+
+                alert('Perfil atualizado com sucesso!');
+                window.location.href = '../html/feed-empresa.html';
+            } catch (error) {
+                console.error('Erro ao salvar perfil no localStorage:', error);
+                alert('Erro ao salvar o perfil. Tente novamente.');
+            }
+        });
+    }
+
+    loadCompanyProfileData();
 });

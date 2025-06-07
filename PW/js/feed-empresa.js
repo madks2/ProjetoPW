@@ -2,12 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const API_BASE_URL = 'http://localhost:3000';
     const API_COMPANY_PROFILE_ENDPOINT = '/api/company/profile';
     const API_COMPANY_UPLOAD_LOGO_ENDPOINT = '/api/company/upload-logo';
-
     const WEATHER_API_KEY = 'f574f6a8d4a724d94851ed01d1a45cc3';
-
-    function getAuthToken() {
-        return localStorage.getItem('companyAuthToken');
-    }
 
     const headerProfile = document.querySelector('.header-profile');
     const profileDropdown = document.querySelector('.profile-dropdown');
@@ -15,30 +10,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const uploadPicInput = document.getElementById('upload-pic');
     const headerProfilePic = document.getElementById('header-profile-pic');
     const headerCompanyName = document.getElementById('header-company-name');
-
     const companyNameDisplay = document.getElementById('company-name-display');
     const companyTagline = document.getElementById('company-tagline');
     const vacancyViewsCount = document.getElementById('vacancy-views-count');
     const applicationsReceivedCount = document.getElementById('applications-received-count');
     const editCompanyProfileBtn = document.getElementById('edit-company-profile-btn');
-
     const editCompanyModal = document.getElementById('edit-company-modal');
     const closeCompanyModalButton = editCompanyModal ? editCompanyModal.querySelector('.close-button') : null;
     const editCompanyForm = document.getElementById('edit-company-form');
     const modalCompanyNameInput = document.getElementById('modal-company-name-input');
     const modalCompanyTaglineInput = document.getElementById('modal-company-tagline-input');
     const modalCompanyLocationInput = document.getElementById('modal-company-location-input');
-
     const weatherCityDisplay = document.getElementById('weatherCity');
     const weatherDisplayContainer = document.getElementById('weatherDisplay');
 
+    const vacancyForm = document.getElementById('vacancy-form');
+    const vacancyTitleInput = document.getElementById('vacancy-title');
+    const vacancyLocationInput = document.getElementById('vacancy-location');
+    const vacancyScheduleInput = document.getElementById('vacancy-schedule');
+    const vacancySalaryInput = document.getElementById('vacancy-salary');
+    const vacancyBenefitsTextarea = document.getElementById('vacancy-benefits');
+    const vacancyTypeSelect = document.getElementById('vacancy-type');
+    const vacancySummaryTextarea = document.getElementById('vacancy-summary');
+    const vacancyRequirementsTextarea = document.getElementById('vacancy-requirements');
+    const postVacancyButton = document.getElementById('post-vacancy-button');
+    const cancelEditButton = document.getElementById('cancel-edit-button');
+    const companyVacanciesList = document.getElementById('company-vacancies-list');
+    const noVacanciesMessage = companyVacanciesList ? companyVacanciesList.querySelector('.no-vacancies-message') : null;
+    const logoutLink = document.getElementById('logout-link');
+
+    let editingVacancyId = null;
+
+    function getAuthToken() {
+        return localStorage.getItem('companyAuthToken');
+    }
+
     async function loadCompanyProfileData() {
-        const storedCompanyName = localStorage.getItem('companyName') || '';
-        const storedCompanyTagline = localStorage.getItem('companyTagline') || '';
-        const storedCompanyLogoUrl = localStorage.getItem('companyLogoUrl') || '';
+        const storedCompanyName = localStorage.getItem('companyName') || 'Nome da Empresa';
+        const storedCompanyTagline = localStorage.getItem('companyTagline') || 'Slogan da Empresa aqui';
+        const storedCompanyLogoUrl = localStorage.getItem('companyLogoUrl') || 'https://via.placeholder.com/90';
         const storedVacancyViews = localStorage.getItem('companyVacancyViews') || '0';
         const storedApplicationsReceived = localStorage.getItem('companyApplicationsReceived') || '0';
-        const storedCompanyLocation = localStorage.getItem('companyLocation') || '';
+        const storedCompanyLocation = localStorage.getItem('companyLocation') || 'São Paulo - SP';
 
         if (companyNameDisplay) companyNameDisplay.textContent = storedCompanyName;
         if (companyTagline) companyTagline.textContent = storedCompanyTagline;
@@ -78,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (headerCompanyName) headerCompanyName.textContent = data.name || storedCompanyName;
             if (vacancyViewsCount) vacancyViewsCount.textContent = data.vacancyViews || storedVacancyViews;
             if (applicationsReceivedCount) applicationsReceivedCount.textContent = data.applicationsReceived || storedApplicationsReceived;
-            
+
             localStorage.setItem('companyName', data.name || storedCompanyName);
             localStorage.setItem('companyTagline', data.tagline || storedCompanyTagline);
             localStorage.setItem('companyLogoUrl', data.logoUrl || storedCompanyLogoUrl);
@@ -95,10 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!weatherDisplayContainer) return;
 
         weatherDisplayContainer.innerHTML = '<p>Carregando dados do tempo...</p>';
-        
-        if (!WEATHER_API_KEY) {
-            weatherDisplayContainer.innerHTML = '<p style="color: red;">Erro: Chave da API de tempo não configurada.</p>';
-            console.error("ERRO: Chave da API do OpenWeatherMap não configurada.");
+
+        if (!WEATHER_API_KEY || WEATHER_API_KEY === 'YOUR_OPENWEATHERMAP_API_KEY') {
+            weatherDisplayContainer.innerHTML = '<p style="color: red;">Erro: Chave da API de tempo não configurada ou inválida.</p>';
+            console.error("ERRO: Chave da API do OpenWeatherMap não configurada ou é a chave placeholder.");
             return;
         }
 
@@ -107,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (data.cod !== 200) {
-                weatherDisplayContainer.innerHTML = `<p>Erro ao buscar tempo: ${data.message || 'Cidade não encontrada.'}</p>`;
+                weatherDisplayContainer.innerHTML = `<p>Erro ao buscar tempo para ${city}: ${data.message || 'Cidade não encontrada.'}</p>`;
                 return;
             }
 
@@ -132,12 +145,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadWeatherForCompanyLocation() {
         const companyLocation = localStorage.getItem('companyLocation');
         if (companyLocation) {
-            const city = companyLocation.split(' - ')[0]; 
+            const city = companyLocation.split(' - ')[0].trim();
             if (city) {
                 if (weatherCityDisplay) weatherCityDisplay.textContent = city;
                 fetchWeather(city);
             } else {
-                if (weatherDisplayContainer) weatherDisplayContainer.innerHTML = '<p>Cidade não encontrada para buscar o tempo.</p>';
+                if (weatherDisplayContainer) weatherDisplayContainer.innerHTML = '<p>Cidade não encontrada na localização da empresa.</p>';
             }
         } else {
             if (weatherDisplayContainer) weatherDisplayContainer.innerHTML = '<p>Localização da empresa não disponível.</p>';
@@ -260,13 +273,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 companyNameDisplay.textContent = updatedCompanyData.name;
                 companyTagline.textContent = updatedCompanyData.tagline;
                 headerCompanyName.textContent = updatedCompanyData.name;
+
                 localStorage.setItem('companyName', updatedCompanyData.name);
                 localStorage.setItem('companyTagline', updatedCompanyData.tagline);
                 localStorage.setItem('companyLocation', updatedCompanyData.location);
 
-
                 editCompanyModal.style.display = 'none';
                 alert('Perfil da empresa atualizado com sucesso!');
+                loadWeatherForCompanyLocation();
 
             } catch (error) {
                 console.error('Erro ao atualizar perfil da empresa:', error);
@@ -275,25 +289,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const vacancyForm = document.getElementById('vacancy-form');
-    const vacancyTitleInput = document.getElementById('vacancy-title');
-    const vacancyLocationInput = document.getElementById('vacancy-location');
-    const vacancyScheduleInput = document.getElementById('vacancy-schedule');
-    const vacancySalaryInput = document.getElementById('vacancy-salary');
-    const vacancyBenefitsTextarea = document.getElementById('vacancy-benefits');
-    const vacancyTypeSelect = document.getElementById('vacancy-type');
-    const vacancySummaryTextarea = document.getElementById('vacancy-summary');
-    const vacancyRequirementsTextarea = document.getElementById('vacancy-requirements');
-
-    const postVacancyButton = document.getElementById('post-vacancy-button');
-    const cancelEditButton = document.getElementById('cancel-edit-button');
-    const companyVacanciesList = document.getElementById('company-vacancies-list');
-    const noVacanciesMessage = companyVacanciesList ? companyVacanciesList.querySelector('.no-vacancies-message') : null;
-
-    let editingVacancyId = null;
-
     const loadVacancies = () => {
-        if (!companyVacanciesList) return; 
+        if (!companyVacanciesList) return;
 
         const vacancies = JSON.parse(localStorage.getItem('companyVacancies')) || [];
         displayVacancies(vacancies);
@@ -365,9 +362,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (companyVacanciesList) {
         companyVacanciesList.addEventListener('click', (event) => {
             const target = event.target;
-            const vacancyId = parseInt(target.closest('button')?.dataset.id);
+            const buttonElement = target.closest('button');
+            if (!buttonElement) return;
 
-            if (target.classList.contains('btn-edit') || target.closest('.btn-edit')) {
+            const vacancyId = parseInt(buttonElement.dataset.id);
+
+            if (buttonElement.classList.contains('btn-edit') || buttonElement.closest('.btn-edit')) {
                 const vacancies = JSON.parse(localStorage.getItem('companyVacancies')) || [];
                 const vacancyToEdit = vacancies.find(v => v.id === vacancyId);
 
@@ -386,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (cancelEditButton) cancelEditButton.style.display = 'inline-block';
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
-            } else if (target.classList.contains('btn-delete') || target.closest('.btn-delete')) {
+            } else if (buttonElement.classList.contains('btn-delete') || buttonElement.closest('.btn-delete')) {
                 if (confirm('Tem certeza que deseja excluir esta vaga?')) {
                     let vacancies = JSON.parse(localStorage.getItem('companyVacancies')) || [];
                     vacancies = vacancies.filter(v => v.id !== vacancyId);
@@ -407,7 +407,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const logoutLink = document.getElementById('logout-link');
     if (logoutLink) {
         logoutLink.addEventListener('click', (event) => {
             event.preventDefault();

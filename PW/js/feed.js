@@ -246,74 +246,55 @@ document.addEventListener('DOMContentLoaded', () => {
         if (searchLocationInput) searchLocationInput.addEventListener('input', filtrarVagas);
     }
 
-    const newsArticlesContainer = document.getElementById('news-articles');
-    const loadingMessageNews = document.createElement('div');
-    loadingMessageNews.classList.add('loading-message');
-    loadingMessageNews.textContent = 'Carregando notícias...';
-    loadingMessageNews.style.display = 'none';
+ const fetchWeatherData = async (city) => {
+        const weatherCard = document.getElementById('weather-card');
+        if (!weatherCard) return;
 
-    if (newsArticlesContainer) {
-        newsArticlesContainer.appendChild(loadingMessageNews);
-    }
+        const WEATHER_API_KEY = 'f574f6a8d4a724d94851ed01d1a45cc3';
 
-    const fetchCurrentsTechNews = async () => {
-        if (!newsArticlesContainer) return;
-
-        loadingMessageNews.style.display = 'block';
-        newsArticlesContainer.innerHTML = '';
-        newsArticlesContainer.appendChild(loadingMessageNews);
-
-        const CURRENTS_API_KEY = 'HlLb-xiZZ7JQNlzWgrmsPvXQI2k8ABdRjK699Pk_FYyNXVQB';
-        const CURRENTS_API_URL = `https://api.currentsapi.services/v1/latest-news?language=pt&keywords=tecnologia&category=technology&apiKey=${CURRENTS_API_KEY}`;
+        const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_API_KEY}&units=metric&lang=pt_br`;
 
         try {
-            const response = await fetch(CURRENTS_API_URL);
-
+            const response = await fetch(WEATHER_API_URL);
             if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(`Erro da API da Currents: ${response.status} - ${errorData.message || 'Erro desconhecido'}`);
+                throw new Error(`Erro ao buscar dados do clima: ${response.statusText}`);
             }
-
             const data = await response.json();
-            const articles = data.news;
 
-            if (articles.length === 0) {
-                newsArticlesContainer.innerHTML = '<p>Nenhuma notícia de tecnologia encontrada no momento pela Currents API.</p>';
-            } else {
-                articles.slice(0, 5).forEach(article => {
-                    const newsElement = document.createElement('div');
-                    newsElement.classList.add('news-article');
-                    newsElement.innerHTML = `
-                        <h5><a href="${article.url}" target="_blank" rel="noopener">${article.title}</a></h5>
-                        <p>${article.description || ''}</p>
-                        ${article.image ? `<img src="${article.image}" alt="Imagem da notícia" style="max-width:100%; height:auto;">` : ''}
-                    `;
-                    newsArticlesContainer.appendChild(newsElement);
-                });
-            }
+            const temperature = Math.round(data.main.temp);
+            const description = data.weather[0].description;
+            const iconCode = data.weather[0].icon;
+            const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+            weatherCard.innerHTML = `
+                <h4>Clima em ${city}</h4>
+                <div class="weather-info">
+                    <img src="${iconUrl}" alt="${description}" class="weather-icon">
+                    <p>${temperature}°C</p>
+                    <p>${description.charAt(0).toUpperCase() + description.slice(1)}</p>
+                </div>
+            `;
         } catch (error) {
-            newsArticlesContainer.innerHTML = '<p class="error-message">Não foi possível carregar as notícias no momento. Tente novamente mais tarde.</p>';
-        } finally {
-            if (loadingMessageNews) loadingMessageNews.style.display = 'none';
+            console.error("Erro ao carregar clima:", error);
+            weatherCard.innerHTML = `
+                <h4>Clima</h4>
+                <p class="error-message">Não foi possível carregar o clima.</p>
+            `;
         }
     };
 
-    fetchCurrentsTechNews();
+    const userDataString = localStorage.getItem('userDataCandidato');
+    let userData = {};
 
-    function isUserLoggedIn() {
-        return localStorage.getItem('isLoggedIn') === 'true';
+    if (userDataString) {
+        try {
+            userData = JSON.parse(userDataString);
+        } catch (e) {
+            console.error("Erro ao fazer parse de userDataCandidato do localStorage:", e);
+        }
     }
 
-    const viewAllLink = document.querySelector('.view-all-link');
-    if (viewAllLink) {
-        viewAllLink.addEventListener('click', (event) => {
-            event.preventDefault();
+    const userCity = userData.cidade || 'Sao Paulo';
 
-            if (isUserLoggedIn()) {
-                window.location.href = 'todas-as-vagas.html';
-            } else {
-                window.location.href = 'login.html';
-            }
-        });
-    }
-}); 
+    fetchWeatherData(userCity);
+});

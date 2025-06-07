@@ -5,6 +5,14 @@ var formularioBusca = document.getElementById('filter-form');
 var mensagemStatus = document.getElementById('status-message');
 const viewAllLink = document.querySelector('.view-all-link');
 
+const cepInput = document.getElementById('cepCandidato');
+const ruaInput = document.getElementById('ruaCandidato');
+const cidadeInput = document.getElementById('cidadeCandidato');
+const complementoInput = document.getElementById('complementoCandidato');
+const numeroInput = document.getElementById('numeroCandidato');
+const cepError = document.getElementById('cepErrorCandidato');
+
+
 function togglePasswordVisibility(inputId, iconId) {
     const input = document.getElementById(inputId);
     const icon = document.getElementById(iconId);
@@ -46,7 +54,10 @@ function validateAge(dateInputId, buttonId, errorMsgId) {
             if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) idade--;
 
             if (idade >= 18) {
-                registerButton.disabled = false;
+                const termosCheckbox = document.getElementById('termos');
+                if (termosCheckbox && termosCheckbox.checked) {
+                    registerButton.disabled = false;
+                }
                 idadeError.textContent = '';
             } else {
                 registerButton.disabled = true;
@@ -56,36 +67,91 @@ function validateAge(dateInputId, buttonId, errorMsgId) {
     }
 }
 
+async function fetchAddressByCep(cep) {
+    if (cepError) cepError.style.display = 'none';
+    clearAddressFields();
+
+    if (!cep || cep.length !== 8) {
+        if (cepError) {
+            cepError.textContent = 'CEP inválido. Deve ter 8 dígitos.';
+            cepError.style.display = 'block';
+        }
+        return;
+    }
+
+    try {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await response.json();
+
+        if (data.erro) {
+            if (cepError) {
+                cepError.textContent = 'CEP não encontrado.';
+                cepError.style.display = 'block';
+            }
+            clearAddressFields();
+            return;
+        }
+
+        if (ruaInput) ruaInput.value = data.logradouro || '';
+        if (cidadeInput) cidadeInput.value = data.localidade || '';
+
+    } catch (error) {
+        console.error('Erro ao buscar CEP:', error);
+        if (cepError) {
+            cepError.textContent = 'Erro ao buscar CEP. Verifique sua conexão ou tente novamente.';
+        }
+        clearAddressFields();
+    }
+}
+
+function clearAddressFields() {
+    if (ruaInput) ruaInput.value = '';
+    if (cidadeInput) cidadeInput.value = '';
+}
+
+
 function setupLoginCandidato() {
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         const savedEmail = localStorage.getItem('lastRegisteredEmailCandidato');
-        if (savedEmail) document.getElementById('email').value = savedEmail;
+        if (savedEmail) document.getElementById('emailCandidatoLogin').value = savedEmail;
 
         const toggleIcon = loginForm.querySelector('.toggle-password');
         if (toggleIcon) {
             toggleIcon.id = 'togglePasswordCandidato';
             toggleIcon.addEventListener('click', function () {
-                togglePasswordVisibility('senha', 'togglePasswordCandidato');
+                togglePasswordVisibility('senhaCandidatoLogin', 'togglePasswordCandidato');
             });
         }
 
         loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            const email = document.getElementById('email').value;
-            const senha = document.getElementById('senha').value;
+            const email = document.getElementById('emailCandidatoLogin').value;
+            const senha = document.getElementById('senhaCandidatoLogin').value;
             const userData = JSON.parse(localStorage.getItem('userDataCandidato'));
 
             if (userData && userData.email === email && userData.senha === senha) {
                 alert('Login de Candidato realizado com sucesso!');
                 localStorage.setItem('isLoggedInCandidato', 'true');
-                window.location.href = '../html/feed.html';
+                localStorage.setItem('candidatoEmail', userData.email);
+                localStorage.setItem('candidatoNomeCompleto', userData.nome);
+                localStorage.setItem('candidatoCep', userData.cep);
+                localStorage.setItem('candidatoRua', userData.rua);
+                localStorage.setItem('candidatoNumero', userData.numero);
+                localStorage.setItem('candidatoComplemento', userData.complemento);
+                localStorage.setItem('candidatoBairro', userData.bairro);
+                localStorage.setItem('candidatoCidade', userData.cidade);
+                localStorage.setItem('candidatoEstado', userData.estado);
+
+
+                window.location.href = '../html/feed-candidato.html';
             } else {
                 alert('E-mail ou senha de Candidato incorretos!');
             }
         });
     }
 }
+
 
 function setupRegisterCandidato() {
     const registerForm = document.getElementById('registerFormCandidato');
@@ -97,32 +163,107 @@ function setupRegisterCandidato() {
             togglePasswordVisibility('confirmSenhaCandidato', 'toggleConfirmaPasswordCandidato');
         });
 
-        registerForm.addEventListener('submit', function (e) {
+        if (cepInput) {
+            cepInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 8) value = value.substring(0, 8);
+                if (value.length > 5) value = value.replace(/^(\d{5})(\d)/, '$1-$2');
+                e.target.value = value;
+            });
+
+            cepInput.addEventListener('blur', async function(e) {
+                const cep = e.target.value.replace(/\D/g, '');
+                if (cep.length === 8) {
+                    await fetchAddressByCep(cep);
+                } else {
+                    clearAddressFields();
+                    if (cepError) {
+                        cepError.textContent = 'CEP inválido ou incompleto (8 dígitos são necessários).';
+                        cepError.style.display = 'block';
+                    }
+                }
+            });
+        }
+
+
+        registerForm.addEventListener('submit', async function (e) {
             e.preventDefault();
             const senha = document.getElementById('cadSenhaCandidato').value;
             const confirmSenha = document.getElementById('confirmSenhaCandidato').value;
+            const termosCheckbox = document.getElementById('termos');
+            const dataNascimento = document.getElementById('dataNascimentoCandidato');
+            const idadeError = document.getElementById('idadeErrorCandidato');
+
 
             if (senha !== confirmSenha) {
                 alert('As senhas não coincidem!');
                 return;
             }
 
+            if (!termosCheckbox || !termosCheckbox.checked) {
+                alert('Você deve aceitar os Termos de Serviço e Política de Privacidade.');
+                return;
+            }
+
+            const hoje = new Date();
+            const nascimento = new Date(dataNascimento.value);
+            let idade = hoje.getFullYear() - nascimento.getFullYear();
+            const mes = hoje.getMonth() - nascimento.getMonth();
+
+            if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) idade--;
+
+            if (idade < 18) {
+                alert('Você deve ter 18 anos ou mais para se cadastrar.');
+                return;
+            }
+            
+            const cepLimpo = cepInput.value.replace(/\D/g, '');
+            let enderecoCompletoAPI = {};
+            if (cepLimpo.length === 8) {
+                try {
+                    const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+                    const data = await response.json();
+                    if (!data.erro) {
+                        enderecoCompletoAPI = data;
+                    } else {
+                        alert('CEP não encontrado ou inválido. Por favor, verifique.');
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Erro ao buscar CEP durante o cadastro:', error);
+                    alert('Erro ao buscar CEP. Verifique sua conexão ou tente novamente.');
+                    return;
+                }
+            } else {
+                 alert('Por favor, insira um CEP válido com 8 dígitos.');
+                 return;
+            }
+
+
             const userData = {
                 nome: document.getElementById('nomeCandidato').value,
-                dataNascimento: document.getElementById('dataNascimentoCandidato').value,
+                dataNascimento: dataNascimento.value,
                 telefone: document.getElementById('telefoneCandidato').value,
                 email: document.getElementById('emailCandidatoRegister').value,
-                senha: senha
+                senha: senha,
+                cep: cepInput.value.replace(/\D/g, ''),
+                rua: ruaInput.value,
+                numero: numeroInput.value,
+                complemento: complementoInput.value,
+                bairro: enderecoCompletoAPI.bairro || '',
+                cidade: enderecoCompletoAPI.localidade || '',
+                estado: enderecoCompletoAPI.uf || '',
             };
 
             localStorage.setItem('userDataCandidato', JSON.stringify(userData));
             localStorage.setItem('lastRegisteredEmailCandidato', userData.email);
 
             alert('Cadastro de Candidato realizado com sucesso!');
-            window.location.href = '../html/login.html';
+            window.location.href = '../html/login-candidato.html';
         });
     }
 }
+
 
 function carregarVagas() {
     mostrarCarregando();
@@ -179,8 +320,8 @@ function mostrarVagas() {
                 
                 <div class="job-skills" style="margin-top: 1rem;">
                     ${vaga.habilidades.map(function (habilidade) {
-            return `<span class="skill-tag">${habilidade}</span>`;
-        }).join('')}
+                return `<span class="skill-tag">${habilidade}</span>`;
+            }).join('')}
                 </div>
             </div>
             
