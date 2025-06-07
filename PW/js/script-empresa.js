@@ -1,4 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const cepInput = document.getElementById('cep');
+    const ruaInput = document.getElementById('rua');
+    const cidadeInput = document.getElementById('cidade');
+    const complementoInput = document.getElementById('complemento');
+    const numeroInput = document.getElementById('numero');
+    const cepError = document.getElementById('cepError');
+
+    const termosCheckbox = document.getElementById('termos');
+    const registerButton = document.getElementById('registerButton');
+
+    if (registerButton) {
+        registerButton.disabled = true;
+    }
+
+    if (termosCheckbox && registerButton) {
+        termosCheckbox.addEventListener('change', function() {
+            registerButton.disabled = !this.checked;
+        });
+    }
+
     function applyMasks() {
         const cnpjInput = document.getElementById('cnpj');
         if (cnpjInput) {
@@ -39,6 +59,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 e.target.value = value;
             });
         }
+
+        if (cepInput) {
+            cepInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 8) {
+                    value = value.substring(0, 8);
+                }
+                if (value.length > 5) {
+                    value = value.replace(/^(\d{5})(\d)/, '$1-$2');
+                }
+                e.target.value = value;
+            });
+
+            cepInput.addEventListener('blur', async function(e) {
+                const cep = e.target.value.replace(/\D/g, '');
+                if (cep.length === 8) {
+                    await fetchAddressByCep(cep);
+                } else {
+                    clearAddressFields();
+                    if (cepError) {
+                        cepError.textContent = 'CEP inválido ou incompleto (8 dígitos são necessários).';
+                        cepError.style.display = 'block';
+                    }
+                }
+            });
+        }
     }
 
     function setupPasswordToggles() {
@@ -53,11 +99,59 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    async function fetchAddressByCep(cep) {
+        if (cepError) cepError.style.display = 'none';
+        clearAddressFields();
+
+        if (!cep || cep.length !== 8) {
+            if (cepError) {
+                cepError.textContent = 'CEP inválido. Deve ter 8 dígitos.';
+                cepError.style.display = 'block';
+            }
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            const data = await response.json();
+
+            if (data.erro) {
+                if (cepError) {
+                    cepError.textContent = 'CEP não encontrado.';
+                    cepError.style.display = 'block';
+                }
+                clearAddressFields();
+                return;
+            }
+
+            if (ruaInput) ruaInput.value = data.logradouro || '';
+            if (cidadeInput) cidadeInput.value = data.localidade || '';
+
+        } catch (error) {
+            console.error('Erro ao buscar CEP:', error);
+            if (cepError) {
+                cepError.textContent = 'Erro ao buscar CEP. Verifique sua conexão ou tente novamente.';
+            }
+            clearAddressFields();
+        }
+    }
+
+    function clearAddressFields() {
+        if (ruaInput) ruaInput.value = '';
+        if (cidadeInput) cidadeInput.value = '';
+    }
+
     function setupRegisterForm() {
         const registerForm = document.getElementById('registerForm');
         if (registerForm) {
-            registerForm.addEventListener('submit', function(e) {
+            registerForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
+
+                if (!termosCheckbox.checked) {
+                    alert('Você deve aceitar os Termos Comerciais para cadastrar a empresa.');
+                    return;
+                }
+
                 const senha = document.getElementById('senha').value;
                 const confirmSenha = document.getElementById('confirmSenha').value;
 
@@ -66,10 +160,27 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
 
+                const cepLimpo = cepInput.value.replace(/\D/g, '');
+                let enderecoCompletoAPI = {};
+                if (cepLimpo.length === 8) {
+                    const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+                    const data = await response.json();
+                    if (!data.erro) {
+                        enderecoCompletoAPI = data;
+                    }
+                }
+
                 const empresaData = {
                     razaoSocial: document.getElementById('razaoSocial').value,
                     cnpj: document.getElementById('cnpj').value,
                     telefone: document.getElementById('telefone').value,
+                    cep: cepInput ? cepInput.value.replace(/\D/g, '') : '',
+                    rua: ruaInput ? ruaInput.value : '',
+                    complemento: complementoInput ? complementoInput.value : '',
+                    numero: numeroInput ? numeroInput.value : '',
+                    bairro: enderecoCompletoAPI.bairro || '',
+                    cidade: enderecoCompletoAPI.localidade || '',
+                    estado: enderecoCompletoAPI.uf || '',
                     email: document.getElementById('email').value,
                     responsavel: document.getElementById('responsavel') ? document.getElementById('responsavel').value : '',
                     cargo: document.getElementById('cargo') ? document.getElementById('cargo').value : '',
@@ -77,9 +188,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 };
 
                 localStorage.setItem('empresaData', JSON.stringify(empresaData));
-                localStorage.setItem('lastEmpresaEmail', empresaData.email);
+                localStorage.setItem('companyName', empresaData.razaoSocial);
+                localStorage.setItem('companyLocation', (empresaData.cidade || '') + ' - ' + (empresaData.estado || '')); 
+                localStorage.setItem('companyAuthToken', 'simulated_token_for_company_' + empresaData.email);
 
-                alert('Cadastro realizado com sucesso!');
+                alert('Cadastro realizado com sucesso! Faça login para continuar.');
                 window.location.href = '../html/login-empresa.html';
             });
         }
@@ -100,6 +213,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const empresaData = JSON.parse(localStorage.getItem('empresaData'));
 
                 if (empresaData && empresaData.email === email && empresaData.senha === senha) {
+                    localStorage.setItem('companyName', empresaData.razaoSocial);
+                    localStorage.setItem('companyAuthToken', 'simulated_token_for_company_' + empresaData.email);
+                    
+                    if (empresaData.cidade && empresaData.estado) {
+                        localStorage.setItem('companyLocation', empresaData.cidade + ' - ' + empresaData.estado);
+                    }
+                    
                     alert('Login realizado com sucesso!');
                     window.location.href = '../html/feed-empresa.html';
                 } else {

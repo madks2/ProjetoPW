@@ -6,13 +6,12 @@
     <title>PRONETWORKER</title>
     <link rel="stylesheet" href="../css/feed-empresa.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <header>
         <nav class="navbar">
             <a href="#" class="logo">
-                <img src="../assets/image_568019.png" alt="PRONETWORKER Logo">
+                <img src="../assets/logo.png" alt="PRONETWORKER Logo">
             </a>
 
             <div class="nav-links">
@@ -21,17 +20,17 @@
                 <li>
                     <a href="#" class="nav-link notification">
                         <i class="ri-notification-line"></i> Notificações
-                        <div class="badge">2</div>
+                        <div class="badge">1</div>
                     </a>
                 </li>
             </div>
 
             <div class="header-profile auth-buttons">
-                <img id="header-profile-pic" src="../assets/Captura de tela 2025-06-02 174843.png" alt="Perfil Empresa" class="profile-thumb" />
-                <span class="profile-name">Empresa XYZ <i class="ri-arrow-down-s-fill"></i></span>
+                <img id="header-profile-pic" src="" alt="Perfil Empresa" class="profile-thumb" />
+                <span id="header-company-name" class="profile-name"><i class="ri-arrow-down-s-fill"></i></span>
                 <div class="dropdown-options profile-dropdown">
-                    <a href="#">Ver Perfil</a>
-                    <a href="../html/index.html">Sair</a>
+                    <a href="../html/feed-empresa.html">Ver Perfil</a>
+                    <a href="../html/index.html" id="logout-link">Sair</a>
                 </div>
             </div>
         </nav>
@@ -40,19 +39,16 @@
     <main class="main">
         <div class="left-main">
             <div class="left-main-1 profile-card-container">
-                <img id="my-profile-pic" src="../assets/Captura de tela 2025-06-02 174843.png" alt="Logo da empresa" class="my-picture">
+                <img id="my-profile-pic" src="" alt="Logo da empresa" class="my-picture">
                 <input type="file" id="upload-pic" accept="image/*">
                 <div class="about">
-                    <h5>Empresa XYZ Ltda.</h5>
-                    <p class="name-about">Inovando em soluções de tecnologia | Em busca de talentos!</p>
-                    <button class="edit-profile-button" onclick="document.getElementById('upload-pic').click()">
-                        <i class="ri-image-add-line"></i> Editar Logo
-                    </button>
-                    <a href="#" class="edit-profile-button edit-pic-button"><i class="ri-pencil-line"></i> Editar Perfil</a>
+                    <h5 id="company-name-display"></h5>
+                    <p id="company-tagline" class="name-about"></p>
+                    <a href="#" id="edit-company-profile-btn" class="edit-profile-button edit-pic-button"><i class="ri-pencil-line"></i> Editar Perfil</a>
                 </div>
                 <div class="analytics">
                     <h5>Visualizações de Vagas</h5>
-                    <p>530</p>
+                    <p id="vacancy-views-count">330</p>
                 </div>
                 <div class="premium">
                     <p>Aproveite ao máximo seu perfil com o Premium</p>
@@ -62,7 +58,7 @@
                 </div>
                 <div class="my-item">
                     <p>Candidaturas Recebidas</p>
-                    <p class="count">25</p>
+                    <p class="count" id="applications-received-count">45</p>
                 </div>
             </div>
         </div>
@@ -115,36 +111,19 @@
                     <button type="button" class="btn btn-outline" id="cancel-edit-button" style="display:none;">Cancelar Edição</button>
                 </form>
             </div>
-
-            </div>
-
+        </div>
+        
         <div class="right-main">
-            <div class="right-main-2 news-feed-card">
-                <h4>Notícias de Tecnologia</h4>
-                <div class="news-article">
-                    <a href="#">
-                        <h5>Startup brasileira levanta R$10M para IA</h5>
-                    </a>
-                    <p>Há 2h atrás</p>
+            <div class="right-main-2">
+                <h4>Clima em <span id="weatherCity"></span></h4>
+                <div id="weatherDisplay" class="weather-info">
+                    <p>Carregando dados do tempo...</p>
                 </div>
-                <div class="news-article">
-                    <a href="#">
-                        <h5>As 5 tendências tecnológicas de 2025</h5>
-                    </a>
-                    <p>Há 1 dia atrás</p>
-                </div>
-                <div class="news-article">
-                    <a href="#">
-                        <h5>Blockchain revoluciona a segurança de dados</h5>
-                    </a>
-                    <p>Há 3 dias atrás</p>
-                </div>
-                <a href="#" class="view-all-link">Ver todas as notícias <i class="ri-arrow-right-line"></i></a>
             </div>
         </div>
     </main>
 
- <footer>
+    <footer>
         <div class="footer-container">
             <div class="footer-about">
                 <a href="#" class="footer-logo">
